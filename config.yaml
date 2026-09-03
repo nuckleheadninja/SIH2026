@@ -1,0 +1,36 @@
+ocr:
+  engine: paddleocr  # Options: paddleocr, easyocr
+  use_gpu: false
+  language: en
+  confidence_threshold: 0.70
+  high_confidence_threshold: 0.90
+  medium_confidence_threshold: 0.70
+
+preprocessing:
+  profile: auto  # Options: default, low_contrast, noisy, perspective, auto
+  target_long_side: 1600
+  clahe_clip_limit: 2.0
+  clahe_tile_grid_size: [8, 8]
+  denoise_h: 10
+  sharpen_strength: 1.5
+
+layout:
+  grid_rows: 3
+  grid_cols: 3
+  coordinate_reference: image
+  spatial_relation_distance_threshold: 150  # Max distance in pixels for 'near' relation
+
+visualization:
+  draw_boxes: true
+  draw_confidence: true
+  draw_regions: true
+  draw_ids: true
+  box_color: [0, 255, 0]      # BGR Green
+  text_color: [255, 255, 255]  # White
+  bg_color: [0, 0, 0]        # Black overlay background
+
+output:
+  save_json: true
+  save_annotated_image: true
+  save_preprocessed_image: true
+  output_dir: output

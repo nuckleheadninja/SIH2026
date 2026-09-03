@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+env/
+venv/
+
+# Project output / temporary runs
+output/*
+!output/.gitkeep
+input/*.tmp
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR Extractor & Detection Testing Workbench | AI Legal Metrology</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Telemetry Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon">🔬</div>
+        <div>
+          <h1>OCR Extractor & Detection Testing Workbench</h1>
+          <p class="subtitle">PaddleOCR & EasyOCR Inspection Suite • Evidence-Preserving Text Extractor</p>
+        </div>
+      </div>
+      <div class="header-telemetry" id="headerTelemetry">
+        <div class="telem-pill">
+          <span class="telem-label">OCR ENGINE</span>
+          <span class="telem-val" id="telemetryEngine">PaddleOCR v2.7</span>
+        </div>
+        <div class="telem-pill">
+          <span class="telem-label">DETECTIONS</span>
+          <span class="telem-val text-accent" id="telemetryBlocks">0 blocks</span>
+        </div>
+        <div class="telem-pill">
+          <span class="telem-label">AVG CONFIDENCE</span>
+          <span class="telem-val text-success" id="telemetryAvgConf">0.0%</span>
+        </div>
+        <div class="telem-pill">
+          <span class="telem-label">QUALITY STATUS</span>
+          <span class="badge badge-success" id="telemetryQuality">Pending</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workbench Area -->
+    <main class="workspace">
+      
+      <!-- Upload & Controls Bar -->
+      <section class="control-section card">
+        <div class="upload-compact-zone" id="dropzone">
+          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/jpg" class="file-input">
+          <div class="drop-prompt">
+            <span class="upload-icon">📸</span>
+            <div class="drop-text">
+              <strong>Click here to Select Image</strong> or <strong>Drag & Drop Product Label</strong>
+              <div class="drop-sub" id="uploadSubText">Supports JPG, JPEG, PNG, WEBP files</div>
+            </div>
+          </div>
+          <div class="upload-actions">
+            <button class="btn btn-primary btn-sm" id="btnSelectFile" type="button">📁 Select Image File</button>
+            <button class="btn btn-secondary btn-sm" id="btnSample" type="button">⚡ Run Sample Label</button>
+          </div>
+        </div>
+
+        <div id="loader" class="loader-overlay hidden">
+          <div class="spinner"></div>
+          <p class="loader-text">Executing OCR Detection Engine & Layout Analysis...</p>
+        </div>
+      </section>
+
+      <!-- Testing Workbench Layout Grid (Shown after processing) -->
+      <section id="resultsSection" class="results-section hidden">
+        
+        <!-- Quality Warning Alert Banner -->
+        <div id="qualityBanner" class="quality-banner card hidden">
+          <div class="banner-status">
+            <span id="qualityStatusBadge" class="badge">Acceptable</span>
+            <span id="qualitySummaryText">Image quality inspected successfully.</span>
+          </div>
+          <div id="qualityWarningsList" class="warnings-chips"></div>
+        </div>
+
+        <!-- Testing Grid -->
+        <div class="grid-layout">
+
+          <!-- Left Column: Image Viewport with Bounding Box Overlay -->
+          <div class="viewer-card card">
+            <div class="card-header">
+              <div class="view-title">
+                <h3>Visual Detection Overlay</h3>
+                <span id="resolutionText" class="muted-text">0 x 0 px</span>
+              </div>
+              <div class="view-controls">
+                <button class="toggle-btn active" data-view="annotated" id="btnAnnotated">Annotated</button>
+                <button class="toggle-btn" data-view="original" id="btnOriginal">Original</button>
+                <button class="toggle-btn" data-view="preprocessed" id="btnPreprocessed">Preprocessed</button>
+              </div>
+            </div>
+
+            <!-- Viewport Container with Interactive Overlay -->
+            <div class="image-viewport-wrapper">
+              <div class="image-viewport" id="viewportContainer">
+                <img id="mainImage" src="" alt="Product Scan View">
+                
+                <!-- Interactive SVG Bounding Box Layer -->
+                <svg id="svgOverlay" class="svg-bbox-overlay"></svg>
+
+                <!-- 3x3 Spatial Grid Overlay -->
+                <div id="gridOverlay" class="spatial-grid-overlay">
+                  <div class="grid-cell">TOP-LEFT</div>
+                  <div class="grid-cell">TOP-CENTER</div>
+                  <div class="grid-cell">TOP-RIGHT</div>
+                  <div class="grid-cell">MID-LEFT</div>
+                  <div class="grid-cell">CENTER</div>
+                  <div class="grid-cell">MID-RIGHT</div>
+                  <div class="grid-cell">BOT-LEFT</div>
+                  <div class="grid-cell">BOT-CENTER</div>
+                  <div class="grid-cell">BOT-RIGHT</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="viewer-footer">
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkShowOverlay" checked> Highlight Bounding Boxes
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkShowGrid"> 3x3 Spatial Grid
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" id="chkShowLabels" checked> Box Labels
+              </label>
+            </div>
+          </div>
+
+          <!-- Right Column: OCR Extraction Inspection Drawer -->
+          <div class="inspector-card card">
+            
+            <!-- Summary Confidence Score Cards -->
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span class="metric-label">Total Blocks</span>
+                <span class="metric-value text-accent" id="metricTotal">0</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">High Conf (≥90%)</span>
+                <span class="metric-value text-success" id="metricHigh">0</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Med Conf (70-89%)</span>
+                <span class="metric-value text-warning" id="metricMed">0</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-label">Low Conf (&lt;70%)</span>
+                <span class="metric-value text-error" id="metricLow">0</span>
+              </div>
+            </div>
+
+            <!-- Filter & Search Toolbar -->
+            <div class="filter-toolbar">
+              <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="txtSearchText" placeholder="Search detected OCR text...">
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-filter="all">All</button>
+                <button class="filter-pill pill-success" data-filter="high">High</button>
+                <button class="filter-pill pill-warning" data-filter="medium">Med</button>
+                <button class="filter-pill pill-error" data-filter="low">Low</button>
+              </div>
+              <select id="selectRegionFilter" class="region-select">
+                <option value="all">All Regions</option>
+                <option value="top-left">Top-Left</option>
+                <option value="top-center">Top-Center</option>
+                <option value="top-right">Top-Right</option>
+                <option value="mid-left">Mid-Left</option>
+                <option value="center">Center</option>
+                <option value="mid-right">Mid-Right</option>
+                <option value="bottom-left">Bottom-Left</option>
+                <option value="bottom-center">Bottom-Center</option>
+                <option value="bottom-right">Bottom-Right</option>
+              </select>
+            </div>
+
+            <!-- Inspector Tabs -->
+            <div class="tabs-header">
+              <button class="tab-btn active" data-tab="fieldsTab">🏷️ Extracted Product Details</button>
+              <button class="tab-btn" data-tab="ocrTab">Raw OCR Blocks (<span id="ocrCountBadge">0</span>)</button>
+              <button class="tab-btn" data-tab="spatialTab">Spatial Layout</button>
+              <button class="tab-btn" data-tab="qualityTab">Preprocessing & Quality</button>
+              <button class="tab-btn" data-tab="jsonTab">JSON Payload</button>
+            </div>
+
+            <!-- Tab 0: Extracted Product Details -->
+            <div id="fieldsTab" class="tab-content active">
+              <div class="fields-card-grid" id="fieldsCardGrid">
+                <!-- Dynamic Extracted Fields Cards -->
+              </div>
+            </div>
+
+            <!-- Tab 1: Extracted OCR Blocks Table -->
+            <div id="ocrTab" class="tab-content">
+              <div class="table-container">
+                <table class="ocr-table">
+                  <thead>
+                    <tr>
+                      <th>Seq</th>
+                      <th>Block ID</th>
+                      <th>Raw Extracted Text</th>
+                      <th>Normalized Text</th>
+                      <th>Conf</th>
+                      <th>3x3 Region</th>
+                      <th>BBox Coordinates</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ocrTableBody">
+                    <!-- Dynamic OCR Rows -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Tab 2: Spatial Relationships -->
+            <div id="spatialTab" class="tab-content">
+              <p class="muted-text mb-2">Deterministic spatial relationship pairs computed for OCR text blocks:</p>
+              <div id="spatialChipsContainer" class="spatial-chips-grid">
+                <!-- Dynamic Chips -->
+              </div>
+            </div>
+
+            <!-- Tab 3: Preprocessing & Quality Telemetry -->
+            <div id="qualityTab" class="tab-content">
+              <div class="quality-grid">
+                <div class="stat-box">
+                  <span class="stat-label">Blur Variance (Laplacian)</span>
+                  <span id="valBlur" class="stat-val">0.0</span>
+                  <span class="stat-sub">Sharpness Indicator</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-label">Mean Brightness</span>
+                  <span id="valBrightness" class="stat-val">0.0</span>
+                  <span class="stat-sub">Range 0 - 255</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-label">Contrast Standard Dev</span>
+                  <span id="valContrast" class="stat-val">0.0</span>
+                  <span class="stat-sub">Dynamic Range</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-label">Preprocessing Profile</span>
+                  <span id="valProfile" class="stat-val text-accent">Default</span>
+                  <span id="valOps" class="stat-sub">Applied operations</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab 4: JSON Payload Viewer -->
+            <div id="jsonTab" class="tab-content">
+              <div class="json-header">
+                <span class="muted-text">Full OCR & Extractor Result Schema</span>
+                <div>
+                  <button class="btn btn-sm btn-secondary" id="btnCopyJson">Copy JSON</button>
+                  <a id="btnDownloadJson" class="btn btn-sm btn-primary" download="ocr_result.json">Download JSON</a>
+                </div>
+              </div>
+              <pre id="jsonViewer" class="json-code-block"></pre>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
