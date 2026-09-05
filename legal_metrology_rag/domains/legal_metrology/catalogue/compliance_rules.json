@@ -1,0 +1,158 @@
+{
+  "domain": "legal_metrology",
+  "catalogue_version": "2026.1",
+  "checks": [
+    {
+      "check_id": "LM_MRP_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Maximum Retail Price (MRP) declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["mrp_text", "mrp_bbox"],
+      "query_terms": ["MRP", "maximum retail price", "inclusive of all taxes", "pre-packaged commodity", "declaration"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (f)",
+          "schedule": null,
+          "page": 12
+        }
+      ]
+    },
+    {
+      "check_id": "LM_NET_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Net Quantity declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["net_quantity_text", "net_quantity_bbox"],
+      "query_terms": ["Net Quantity", "net weight", "net volume", "units", "standard unit"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (d)",
+          "schedule": null,
+          "page": 10
+        }
+      ]
+    },
+    {
+      "check_id": "LM_MFG_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Manufacturer or Packer or Importer details declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["manufacturer_name", "manufacturer_address"],
+      "query_terms": ["name and address of manufacturer", "packer", "importer", "pre-packaged commodity"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (a)",
+          "schedule": null,
+          "page": 8
+        }
+      ]
+    },
+    {
+      "check_id": "LM_DATE_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Month and Year of Manufacture or Packing declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["manufacture_date_text"],
+      "query_terms": ["month and year of manufacture", "date of packing", "imported date"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (e)",
+          "schedule": null,
+          "page": 11
+        }
+      ]
+    },
+    {
+      "check_id": "LM_CARE_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Consumer Care Details declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["consumer_care_contact"],
+      "query_terms": ["consumer care", "customer care helpline", "email address", "telephone number", "address"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (g)",
+          "schedule": null,
+          "page": 13
+        }
+      ]
+    },
+    {
+      "check_id": "LM_ORIGIN_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Country of Origin declaration for imported goods",
+      "check_type": "conditional_presence",
+      "applies_to": "imported_pre_packaged_commodity",
+      "required_observations": ["country_of_origin_text"],
+      "query_terms": ["country of origin", "imported package", "made in"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (b)",
+          "schedule": null,
+          "page": 9
+        }
+      ]
+    },
+    {
+      "check_id": "LM_GENERIC_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Generic or Common Name declaration",
+      "check_type": "presence",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["generic_name_text"],
+      "query_terms": ["generic name", "common name of commodity"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 6",
+          "sub_rule": "sub-rule (1)",
+          "clause": "clause (c)",
+          "schedule": null,
+          "page": 9
+        }
+      ]
+    },
+    {
+      "check_id": "LM_SIZE_001",
+      "domain": "legal_metrology",
+      "requirement_name": "Height of Numerals and Letters in Declarations",
+      "check_type": "measurement_format",
+      "applies_to": "pre_packaged_commodity",
+      "required_observations": ["declaration_height_mm", "package_area_cm2"],
+      "query_terms": ["height of numeral", "font size mm", "Schedule II", "principal display panel"],
+      "legal_sources": [
+        {
+          "document": "Legal Metrology (Packaged Commodities) Rules, 2011",
+          "rule": "Rule 7",
+          "sub_rule": "sub-rule (1)",
+          "clause": null,
+          "schedule": "Schedule II",
+          "page": 24
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+[
+  {
+    "id": "NLP_001",
+    "category": "natural_language_paraphrase",
+    "query": "Helpline email and contact for customer grievances",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_002",
+    "category": "natural_language_paraphrase",
+    "query": "consumer complaint contact details",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_003",
+    "category": "natural_language_paraphrase",
+    "query": "customer grievance contact information",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_004",
+    "category": "natural_language_paraphrase",
+    "query": "where can customers complain",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_005",
+    "category": "natural_language_paraphrase",
+    "query": "telephone and email for customer complaints",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_006",
+    "category": "natural_language_paraphrase",
+    "query": "consumer care telephone number",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_007",
+    "category": "natural_language_paraphrase",
+    "query": "helpline details for complaints",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_008",
+    "category": "natural_language_paraphrase",
+    "query": "contact information for consumer grievances",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_009",
+    "category": "natural_language_paraphrase",
+    "query": "customer care email and phone",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_010",
+    "category": "natural_language_paraphrase",
+    "query": "where should grievance contact details be printed",
+    "expected_provisions": ["Rule 6(2)"]
+  },
+  {
+    "id": "NLP_011",
+    "category": "natural_language_paraphrase",
+    "query": "What must be printed as MRP?",
+    "expected_provisions": ["Rule 6(1)(e)"]
+  },
+  {
+    "id": "NLP_012",
+    "category": "natural_language_paraphrase",
+    "query": "Retail price inclusive of all taxes notice",
+    "expected_provisions": ["Rule 6(1)(e)"]
+  },
+  {
+    "id": "NLP_013",
+    "category": "natural_language_paraphrase",
+    "query": "Price display rules for pre-packed goods",
+    "expected_provisions": ["Rule 6(1)(e)"]
+  },
+  {
+    "id": "NLP_014",
+    "category": "natural_language_paraphrase",
+    "query": "Where should the net weight notice appear?",
+    "expected_provisions": ["Rule 6(1)(c)", "Rule 8(1)"]
+  },
+  {
+    "id": "NLP_015",
+    "category": "natural_language_paraphrase",
+    "query": "How should net quantity be written on package?",
+    "expected_provisions": ["Rule 6(1)(c)"]
+  },
+  {
+    "id": "NLP_016",
+    "category": "natural_language_paraphrase",
+    "query": "Standard unit requirements for net content",
+    "expected_provisions": ["Rule 6(1)(c)", "Rule 12(1)"]
+  },
+  {
+    "id": "NLP_017",
+    "category": "natural_language_paraphrase",
+    "query": "Country of origin labeling for imported goods",
+    "expected_provisions": ["Rule 6(1)(aa)"]
+  },
+  {
+    "id": "NLP_018",
+    "category": "natural_language_paraphrase",
+    "query": "Where was imported commodity manufactured or assembled",
+    "expected_provisions": ["Rule 6(1)(aa)"]
+  },
+  {
+    "id": "NLP_019",
+    "category": "natural_language_paraphrase",
+    "query": "Rules for wholesale container labeling",
+    "expected_provisions": ["Rule 24(a)"]
+  },
+  {
+    "id": "NLP_020",
+    "category": "natural_language_paraphrase",
+    "query": "Declarations on bulk wholesale package",
+    "expected_provisions": ["Rule 24(a)"]
+  },
+  {
+    "id": "NLP_021",
+    "category": "natural_language_paraphrase",
+    "query": "Letter size specifications on display panel",
+    "expected_provisions": ["Rule 7(2)"]
+  },
+  {
+    "id": "NLP_022",
+    "category": "natural_language_paraphrase",
+    "query": "Font height requirement for net quantity and MRP",
+    "expected_provisions": ["Rule 7(2)"]
+  },
+  {
+    "id": "NLP_023",
+    "category": "natural_language_paraphrase",
+    "query": "Best before or use by date requirement for perishable items",
+    "expected_provisions": ["Rule 6(1)(da)"]
+  },
+  {
+    "id": "NLP_024",
+    "category": "natural_language_paraphrase",
+    "query": "Exclusion of wrapper weight from net content",
+    "expected_provisions": ["Rule 11(1)"]
+  },
+  {
+    "id": "NLP_025",
+    "category": "natural_language_paraphrase",
+    "query": "Mandatory registration for packers and importers",
+    "expected_provisions": ["Rule 27"]
+  },
+  {
+    "id": "NLP_026",
+    "category": "natural_language_paraphrase",
+    "query": "Clear space surrounding net quantity declaration",
+    "expected_provisions": ["Rule 8(1)"]
+  },
+  {
+    "id": "NLP_027",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity requirement",
+    "expected_provisions": ["Rule 6(1)(c)"]
+  },
+  {
+    "id": "NLP_028",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity unit requirement",
+    "expected_provisions": ["Rule 12(1)"]
+  },
+  {
+    "id": "NLP_029",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity placement",
+    "expected_provisions": ["Rule 8(1)"]
+  },
+  {
+    "id": "NLP_030",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity font height",
+    "expected_provisions": ["Rule 7(2)"]
+  },
+  {
+    "id": "NLP_031",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity clear space",
+    "expected_provisions": ["Rule 8(1)"]
+  },
+  {
+    "id": "NLP_032",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity multipack",
+    "expected_provisions": ["Rule 13(6)"]
+  },
+  {
+    "id": "NLP_033",
+    "category": "contrastive_facet_pair",
+    "query": "net quantity advertisement",
+    "expected_provisions": ["Rule 31(1)"]
+  },
+  {
+    "id": "NLP_034",
+    "category": "contrastive_facet_pair",
+    "query": "wholesale package declarations",
+    "expected_provisions": ["Rule 24(a)"]
+  },
+  {
+    "id": "NLP_035",
+    "category": "contrastive_facet_pair",
+    "query": "multiple retail packages",
+    "expected_provisions": ["Rule 13(6)"]
+  },
+  {
+    "id": "NLP_036",
+    "category": "contrastive_facet_pair",
+    "query": "package font height",
+    "expected_provisions": ["Rule 7(2)"]
+  },
+  {
+    "id": "NLP_037",
+    "category": "contrastive_facet_pair",
+    "query": "advertisement font height",
+    "expected_provisions": ["Rule 31(2)"]
+  },
+  {
+    "id": "NLP_038",
+    "category": "contrastive_facet_pair",
+    "query": "principal display panel size",
+    "expected_provisions": ["Rule 7(2)"]
+  },
+  {
+    "id": "NLP_039",
+    "category": "contrastive_facet_pair",
+    "query": "principal display panel location",
+    "expected_provisions": ["Rule 8(1)"]
+  },
+  {
+    "id": "NLP_040",
+    "category": "contrastive_facet_pair",
+    "query": "outer wrapper declarations",
+    "expected_provisions": ["Rule 9(3)"]
+  },
+  {
+    "id": "NLP_041",
+    "category": "contrastive_facet_pair",
+    "query": "visibility through transparent wrapper",
+    "expected_provisions": ["Rule 9(2)"]
+  }
+]

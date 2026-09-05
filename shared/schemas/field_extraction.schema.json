@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FieldExtractionOutput",
+  "description": "Extracted declaration fields and detected commodity_type from packaging image",
+  "type": "object",
+  "properties": {
+    "image_id": {
+      "type": "string"
+    },
+    "commodity_type": {
+      "type": "string",
+      "description": "e.g. food, general_commodity, drugs_cosmetics"
+    },
+    "extracted_fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string"
+          },
+          "raw_text": {
+            "type": "string"
+          },
+          "normalized_value": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 4,
+            "maxItems": 4
+          }
+        },
+        "required": ["field_name", "raw_text", "confidence"]
+      }
+    }
+  },
+  "required": ["image_id", "commodity_type", "extracted_fields"]
+}

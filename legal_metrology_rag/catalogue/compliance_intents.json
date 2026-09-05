@@ -1,0 +1,422 @@
+[
+  {
+    "intent_id": "consumer_complaint_contact",
+    "requirement_name": "Consumer Complaint Contact Details",
+    "rule_target": "Rule 6(2)",
+    "object": "consumer_complaint",
+    "facets": ["contact", "consumer_care", "grievance"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["consumer", "customer", "complaint", "complaints", "grievance", "grievances", "helpline", "contact", "care", "support"],
+    "attributes": ["name", "address", "telephone", "phone", "email", "e-mail", "office", "number"],
+    "positive_signals": ["consumer care", "customer care", "helpline", "complaint", "grievance", "contact information", "email and phone"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "consumer care details",
+      "customer care details",
+      "helpline details",
+      "complaint contact",
+      "grievance contact",
+      "customer contact information",
+      "consumer contact information",
+      "helpline email and contact for customer grievances",
+      "where can customers complain",
+      "telephone and email for customer complaints",
+      "consumer care telephone number",
+      "helpline details for complaints",
+      "contact information for consumer grievances",
+      "customer care email and phone",
+      "complaint helpline on package",
+      "where should grievance contact details be printed"
+    ]
+  },
+  {
+    "intent_id": "mrp_declaration",
+    "requirement_name": "Maximum Retail Price (MRP) Declaration",
+    "rule_target": "Rule 6(1)(e)",
+    "object": "mrp",
+    "facets": ["declaration_presence", "price_display"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["mrp", "price", "retail", "tax", "taxes", "cost", "charge", "sale", "display"],
+    "attributes": ["maximum retail price", "inclusive of all taxes", "rs", "rupees", "max retail price", "price display"],
+    "positive_signals": ["mrp", "retail sale price", "inclusive of all taxes", "maximum retail price", "price display rules"],
+    "negative_signals": ["advertisement", "advertising", "media release", "wholesale"],
+    "semantic_aliases": [
+      "mrp declaration",
+      "retail sale price",
+      "inclusive of all taxes",
+      "maximum retail price inclusive of taxes",
+      "what must be printed as mrp",
+      "can mrp include all taxes",
+      "price declaration on package",
+      "price display rules for pre-packed goods",
+      "retail price inclusive of all taxes notice"
+    ]
+  },
+  {
+    "intent_id": "net_quantity",
+    "requirement_name": "Net Quantity Declaration",
+    "rule_target": "Rule 6(1)(c)",
+    "object": "net_quantity",
+    "facets": ["declaration_presence", "weight_volume_count"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["net quantity", "net weight", "net volume", "weight", "volume", "measure", "count", "quantity", "contents", "unit"],
+    "attributes": ["standard unit", "grams", "kg", "liters", "ml", "number", "standard unit requirements"],
+    "positive_signals": ["net quantity", "net weight", "net volume", "net weight notice"],
+    "negative_signals": ["advertisement", "advertising", "font size", "numeral height", "clear space", "wrapper exclusion", "when packed", "multi-pack", "wholesale", "si units", "exaggerated", "misleading"],
+    "semantic_aliases": [
+      "net quantity declaration",
+      "net content notice",
+      "how should net quantity be declared",
+      "how should net quantity be written",
+      "declaration of net weight or volume",
+      "standard unit requirements for net content",
+      "how should net quantity be written on package"
+    ]
+  },
+  {
+    "intent_id": "country_of_origin",
+    "requirement_name": "Country of Origin Declaration",
+    "rule_target": "Rule 6(1)(aa)",
+    "object": "country_of_origin",
+    "facets": ["declaration_presence", "origin_country"],
+    "context": "IMPORT_PACKAGE",
+    "entities": ["country of origin", "origin", "imported", "import", "manufacture", "assembly"],
+    "attributes": ["made in", "country name", "imported product", "place of manufacture"],
+    "positive_signals": ["country of origin", "imported goods", "imported commodity", "manufactured or assembled"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "country of origin labeling",
+      "country of origin for imported goods",
+      "where was imported commodity manufactured or assembled",
+      "country of assembly declaration"
+    ]
+  },
+  {
+    "intent_id": "importer_manufacturer_details",
+    "requirement_name": "Manufacturer or Importer Name and Address",
+    "rule_target": "Rule 6(1)(a)",
+    "object": "manufacturer_importer_details",
+    "facets": ["declaration_presence", "name_address"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["manufacturer", "packer", "importer", "company", "maker", "seller"],
+    "attributes": ["name", "address", "location"],
+    "positive_signals": ["name and address", "manufacturer address", "importer details", "packer name and address"],
+    "negative_signals": ["wholesale", "registration"],
+    "semantic_aliases": [
+      "manufacturer address",
+      "importer details",
+      "packer name and address",
+      "what information is required for an imported package",
+      "name and address of manufacturer or importer"
+    ]
+  },
+  {
+    "intent_id": "numeral_height",
+    "requirement_name": "Minimum Height of Numerals and Letters",
+    "rule_target": "Rule 7(2)",
+    "object": "numeral_height",
+    "facets": ["font_size", "numeral_height", "letter_size"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["height", "size", "numeral", "numerals", "letter", "letters", "font", "dimension"],
+    "attributes": ["principal display panel", "table i", "table ii", "mm", "minimum height", "font height"],
+    "positive_signals": ["height of numeral", "minimum letter size", "font size requirement", "letter size specifications", "font height requirement"],
+    "negative_signals": ["advertisement", "advertising", "media release", "wholesale"],
+    "semantic_aliases": [
+      "minimum letter size",
+      "font size requirement",
+      "numeral height",
+      "letter size specifications on display panel",
+      "font height requirement for net quantity and mrp",
+      "what is the minimum height of numerals"
+    ]
+  },
+  {
+    "intent_id": "wholesale_package_declaration",
+    "requirement_name": "Wholesale Package Declarations",
+    "rule_target": "Rule 24(a)",
+    "object": "wholesale_package",
+    "facets": ["wholesale_declaration", "name_address"],
+    "context": "WHOLESALE_PACKAGE",
+    "entities": ["wholesale", "bulk", "distributor", "outer container"],
+    "attributes": ["manufacturer", "importer", "name and address", "bulk wholesale"],
+    "positive_signals": ["wholesale package", "bulk wholesale package", "wholesale container labeling", "rules for wholesale"],
+    "negative_signals": ["retail sale", "consumer complaint"],
+    "semantic_aliases": [
+      "wholesale container labeling",
+      "wholesale package details",
+      "rules for wholesale container labeling",
+      "declarations on bulk wholesale package",
+      "what declarations are required on a wholesale package"
+    ]
+  },
+  {
+    "intent_id": "manufacture_packing_date",
+    "requirement_name": "Month and Year of Manufacture or Pre-packing",
+    "rule_target": "Rule 6(1)(d)",
+    "object": "manufacture_packing_date",
+    "facets": ["declaration_presence", "mfg_date"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["manufacture", "packing", "mfg", "mfd", "date", "month", "year"],
+    "attributes": ["pre-packed", "import date"],
+    "positive_signals": ["month and year of manufacture", "packing date", "mfg date"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "month and year of manufacture",
+      "packing date declaration",
+      "mfg date requirement"
+    ]
+  },
+  {
+    "intent_id": "best_before_date",
+    "requirement_name": "Best Before or Use By Date",
+    "rule_target": "Rule 6(1)(da)",
+    "object": "best_before_date",
+    "facets": ["declaration_presence", "expiry_date"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["best before", "use by", "expiry", "expiration", "perishable", "spoilage"],
+    "attributes": ["date", "month", "year"],
+    "positive_signals": ["best before", "use by date", "expiry date"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "best before or use by date requirement for perishable items",
+      "expiry date declaration",
+      "use by date rule"
+    ]
+  },
+  {
+    "intent_id": "principal_display_panel",
+    "requirement_name": "Principal Display Panel Location and Clear Space",
+    "rule_target": "Rule 8(1)",
+    "object": "principal_display_panel",
+    "facets": ["placement", "spacing", "clear_space"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["principal display panel", "pdp", "location", "clear space", "surrounding"],
+    "attributes": ["display panel", "front panel", "package area", "net quantity declaration"],
+    "positive_signals": ["principal display panel be located", "clear space surrounding", "pdp location", "clear space surrounding net quantity declaration", "net quantity placement"],
+    "negative_signals": ["font height", "numeral height", "table i", "table ii"],
+    "semantic_aliases": [
+      "where must the principal display panel be located",
+      "clear space surrounding quantity declaration",
+      "clear space surrounding net quantity declaration",
+      "pdp location rule",
+      "net quantity placement"
+    ]
+  },
+  {
+    "intent_id": "mrp_color_contrast",
+    "requirement_name": "Color Contrast for MRP and Net Quantity",
+    "rule_target": "Rule 9(1)(b)",
+    "object": "color_contrast",
+    "facets": ["legibility", "color_contrast"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["contrast", "color", "background", "conspicuous", "legibility"],
+    "attributes": ["numerals", "letters", "mrp", "net quantity"],
+    "positive_signals": ["contrast and color legibility", "background color contrast", "conspicuous contrast"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "contrast and color legibility for price declarations",
+      "background color contrast for mrp",
+      "conspicuous contrast requirement"
+    ]
+  },
+  {
+    "intent_id": "transparent_packaging_visibility",
+    "requirement_name": "Packaging Visibility Through Transparent Container or Liquid",
+    "rule_target": "Rule 9(2)",
+    "object": "transparent_packaging",
+    "facets": ["wrapper_visibility", "reading_through"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["transparent", "liquid", "wrapper", "container", "visibility", "reading"],
+    "attributes": ["reading through liquid", "clear packaging"],
+    "positive_signals": ["transparent outer wrapper visibility", "reading through liquid", "transparent packaging contents", "visibility through transparent container"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "transparent outer wrapper visibility requirements",
+      "reading through liquid or transparent packaging",
+      "visibility through transparent container"
+    ]
+  },
+  {
+    "intent_id": "outer_wrapper_container_declaration",
+    "requirement_name": "Outer Wrapper or Container Mandatory Declarations",
+    "rule_target": "Rule 9(3)",
+    "object": "outer_wrapper",
+    "facets": ["outer_wrapper_declarations", "placement"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["outer wrapper", "container", "wrapper"],
+    "attributes": ["mandatory declarations", "appear on outer wrapper"],
+    "positive_signals": ["outer wrapper declarations", "declarations shall appear on such outer wrapper", "provided with an outer wrapper"],
+    "negative_signals": ["transparent", "reading through liquid"],
+    "semantic_aliases": [
+      "outer wrapper declarations",
+      "declarations on outer container or wrapper"
+    ]
+  },
+  {
+    "intent_id": "net_quantity_packaging_exclusion",
+    "requirement_name": "Net Quantity Exclusion of Wrapper Weight",
+    "rule_target": "Rule 11(1)",
+    "object": "wrapper_exclusion",
+    "facets": ["tare_weight", "wrapper_exclusion"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["wrapper", "wrappers", "packaging material", "exclude", "exclusion", "tare"],
+    "attributes": ["net quantity", "exclude wrappers"],
+    "positive_signals": ["exclusion of wrapper weight", "exclude wrappers and packaging materials", "wrapper weight exclusion"],
+    "negative_signals": ["transparent outer wrapper visibility"],
+    "semantic_aliases": [
+      "exclusion of wrapper weight from net content",
+      "net quantity declaration shall exclude wrappers",
+      "wrapper weight exclusion"
+    ]
+  },
+  {
+    "intent_id": "net_quantity_when_packed",
+    "requirement_name": "Net Quantity When Packed Qualification (Third Schedule)",
+    "rule_target": "Rule 11(4)",
+    "object": "when_packed",
+    "facets": ["when_packed_qualification", "third_schedule"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["when packed", "third schedule", "schedule iii", "qualification"],
+    "attributes": ["commodities specified in third schedule"],
+    "positive_signals": ["when packed qualification", "third schedule commodities when packed", "schedule iii commodities when packed"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "third schedule commodities when packed",
+      "schedule iii commodities when packed",
+      "when packed qualification"
+    ]
+  },
+  {
+    "intent_id": "manner_of_standard_units",
+    "requirement_name": "Manner and Units of Net Quantity Declaration",
+    "rule_target": "Rule 12(1)",
+    "object": "standard_unit_manner",
+    "facets": ["unit", "manner_of_declaration"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["standard unit", "unit requirement", "weight measure number", "appropriate standard unit"],
+    "attributes": ["use appropriate standard unit", "unit of weight measure or number"],
+    "positive_signals": ["net quantity unit requirement", "appropriate standard unit", "use appropriate standard unit"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "net quantity unit requirement",
+      "appropriate standard unit for net quantity"
+    ]
+  },
+  {
+    "intent_id": "misleading_net_quantity",
+    "requirement_name": "Exaggerated or Misleading Net Quantity Presentation",
+    "rule_target": "Rule 12(6)",
+    "object": "misleading_quantity",
+    "facets": ["deceptive", "misleading", "exaggerated"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["exaggerated", "misleading", "impression", "deceptive"],
+    "attributes": ["exaggerated or misleading impression"],
+    "positive_signals": ["exaggerated or misleading", "misleading net quantity", "create an exaggerated impression"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "exaggerated or misleading net quantity presentation",
+      "misleading net quantity declaration"
+    ]
+  },
+  {
+    "intent_id": "si_units_net_quantity",
+    "requirement_name": "SI Units Mandatory for Net Quantity Symbols",
+    "rule_target": "Rule 13(5)",
+    "object": "si_units",
+    "facets": ["si_units", "unit"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["si units", "symbols", "international system of units", "si"],
+    "attributes": ["net quantity symbols", "si units mandatory"],
+    "positive_signals": ["si units mandatory", "net quantity symbols", "international system of units"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "are si units mandatory for net quantity symbols",
+      "si unit symbols for net quantity"
+    ]
+  },
+  {
+    "intent_id": "multi_pack_quantity",
+    "requirement_name": "Multi-pack Net Quantity Declaration",
+    "rule_target": "Rule 13(6)",
+    "object": "multi_pack",
+    "facets": ["multipack", "individual_total_quantity"],
+    "context": "MULTIPACK",
+    "entities": ["multi-pack", "multipack", "multiple packages", "outer package", "individual", "total"],
+    "attributes": ["individual quantity", "total quantity"],
+    "positive_signals": ["multi-pack net quantity", "multiple packages of same commodity", "multipack quantity declaration", "multiple retail packages"],
+    "negative_signals": ["wholesale", "bulk wholesale package"],
+    "semantic_aliases": [
+      "what is the rule for multi-pack net quantity",
+      "multiple packages of same commodity contained in outer package",
+      "multipack quantity declaration",
+      "multiple retail packages"
+    ]
+  },
+  {
+    "intent_id": "sheet_count_dimensions",
+    "requirement_name": "Dimensions and Sheet Count for Paper or Plastic Sheets",
+    "rule_target": "Rule 16",
+    "object": "paper_plastic_sheets",
+    "facets": ["sheet_count", "sheet_dimensions"],
+    "context": "PACKAGE_LABEL",
+    "entities": ["paper", "plastic", "sheets", "sheet count", "dimensions"],
+    "attributes": ["exact sheet count and dimensions", "specified paper or plastic sheets"],
+    "positive_signals": ["plastic or paper sheets", "dimensions and sheet count", "sheet count and dimensions"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "dimensions and sheet count for plastic or paper sheets",
+      "paper or plastic sheet count"
+    ]
+  },
+  {
+    "intent_id": "mandatory_registration",
+    "requirement_name": "Mandatory Registration of Manufacturer, Packer, Importer",
+    "rule_target": "Rule 27",
+    "object": "registration",
+    "facets": ["registration", "director_controller"],
+    "context": "GENERAL_QUANTITY",
+    "entities": ["registration", "register", "director", "controller", "legal metrology"],
+    "attributes": ["mandatory registration", "packer", "importer", "manufacturer"],
+    "positive_signals": ["mandatory registration", "registration with director", "legal metrology registration"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "mandatory registration for packers and importers",
+      "registration with director of legal metrology",
+      "legal metrology registration rule"
+    ]
+  },
+  {
+    "intent_id": "advertisement_declaration",
+    "requirement_name": "Net Quantity in Advertisement",
+    "rule_target": "Rule 31(1)",
+    "object": "advertisement",
+    "facets": ["advertisement_declaration"],
+    "context": "ADVERTISEMENT",
+    "entities": ["advertisement", "advertising", "media release", "tv", "newspaper", "commercial"],
+    "attributes": ["net quantity in advertisement", "retail sale price in advertisement"],
+    "positive_signals": ["advertisement mentioning retail sale price", "media release", "advertising net quantity"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "advertisement net quantity requirement",
+      "media release indicating retail sale price",
+      "advertising net quantity"
+    ]
+  },
+  {
+    "intent_id": "advertisement_font_size",
+    "requirement_name": "Net Quantity Font Size in Advertisement",
+    "rule_target": "Rule 31(2)",
+    "object": "advertisement",
+    "facets": ["advertisement_font_size"],
+    "context": "ADVERTISEMENT",
+    "entities": ["advertisement", "advertising", "font size", "price font"],
+    "attributes": ["font size in advertisement", "equal to or larger than retail price font size"],
+    "positive_signals": ["advertisement font size", "font size in advertisement"],
+    "negative_signals": [],
+    "semantic_aliases": [
+      "font size in advertisement",
+      "net quantity font size in advertisement",
+      "advertisement price font size comparison"
+    ]
+  }
+]

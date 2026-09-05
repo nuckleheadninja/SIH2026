@@ -1,0 +1,5 @@
+domain: legal_metrology
+collection_name: legal_metrology
+applies_to: pre_packaged_commodity
+top_k: 3
+hybrid_alpha: 0.5

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComplianceCheckQuery",
+  "description": "Structured compliance check query format sent to Legal Metrology RAG module",
+  "type": "object",
+  "properties": {
+    "check_id": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "commodity_type": {
+      "type": "string"
+    },
+    "field": {
+      "type": "string"
+    },
+    "check_type": {
+      "type": "string",
+      "description": "e.g. presence, height, legibility, format"
+    },
+    "query_terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["check_id", "domain", "commodity_type", "field", "query_terms"]
+}

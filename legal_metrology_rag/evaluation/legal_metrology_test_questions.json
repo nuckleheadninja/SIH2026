@@ -1,0 +1,40 @@
+{
+  "domain": "legal_metrology",
+  "test_cases": [
+    {
+      "check_id": "LM_MRP_001",
+      "field": "mrp",
+      "commodity_type": "pre_packaged_commodity",
+      "query_terms": ["MRP", "maximum retail price", "inclusive of all taxes"],
+      "expected_rule": "Rule 6(1)(f)"
+    },
+    {
+      "check_id": "LM_NET_001",
+      "field": "net_quantity",
+      "commodity_type": "pre_packaged_commodity",
+      "query_terms": ["Net Quantity", "net weight", "net volume"],
+      "expected_rule": "Rule 6(1)(d)"
+    },
+    {
+      "check_id": "LM_MFG_001",
+      "field": "manufacturer_details",
+      "commodity_type": "pre_packaged_commodity",
+      "query_terms": ["manufacturer", "packer", "importer", "name and address"],
+      "expected_rule": "Rule 6(1)(a)"
+    },
+    {
+      "check_id": "LM_CARE_001",
+      "field": "consumer_care",
+      "commodity_type": "pre_packaged_commodity",
+      "query_terms": ["consumer care", "helpline", "email address", "telephone"],
+      "expected_rule": "Rule 6(1)(g)"
+    },
+    {
+      "check_id": "LM_SIZE_001",
+      "field": "declaration_height",
+      "commodity_type": "pre_packaged_commodity",
+      "query_terms": ["height of numeral", "font size mm", "Schedule II"],
+      "expected_rule": "Schedule II"
+    }
+  ]
+}

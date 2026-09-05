@@ -1,0 +1,17 @@
+{
+  "domain": "fssai",
+  "questions": [
+    {
+      "id": "fssai_q1",
+      "question": "Is FSSAI license number mandatory on packaged food?",
+      "expected_rule": "FSSAI Labelling Regulation 2.2.1",
+      "relevant_keywords": ["fssai", "license"]
+    },
+    {
+      "id": "fssai_q2",
+      "question": "What is the requirement for green or brown veg non-veg symbols?",
+      "expected_rule": "FSSAI Labelling Regulation 2.2.3",
+      "relevant_keywords": ["veg", "non-veg", "symbol"]
+    }
+  ]
+}

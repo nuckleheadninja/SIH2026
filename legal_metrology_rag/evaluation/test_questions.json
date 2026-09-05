@@ -1,0 +1,22 @@
+{
+  "test_questions": [
+    {
+      "id": "q1",
+      "question": "What are the mandatory declarations required on packaged commodities?",
+      "expected_rule": "Rule 6(1)",
+      "relevant_keywords": ["manufacturer", "mrp", "net quantity", "month year"]
+    },
+    {
+      "id": "q2",
+      "question": "Is country of origin mandatory for imported goods?",
+      "expected_rule": "Rule 6(1)(b)",
+      "relevant_keywords": ["country of origin", "imported"]
+    },
+    {
+      "id": "q3",
+      "question": "What is the requirement for Consumer Care details on a package?",
+      "expected_rule": "Rule 6(1)(g)",
+      "relevant_keywords": ["consumer care", "email", "telephone"]
+    }
+  ]
+}

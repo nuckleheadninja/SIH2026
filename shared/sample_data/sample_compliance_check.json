@@ -1,0 +1,8 @@
+{
+  "check_id": "LM_MRP_001",
+  "domain": "legal_metrology",
+  "commodity_type": "pre_packaged_commodity",
+  "field": "mrp",
+  "check_type": "presence",
+  "query_terms": ["MRP", "maximum retail price", "pre-packaged commodity", "declaration"]
+}

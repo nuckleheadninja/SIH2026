@@ -1,0 +1,30 @@
+{
+  "domain": "fssai",
+  "applies_to": "food",
+  "rules": [
+    {
+      "rule_id": "FSSAI_LIC_01",
+      "rule_name": "FSSAI License / Registration Number",
+      "rule_number": "FSSAI Labelling Regulation 2.2.1",
+      "mandatory": true,
+      "description": "FSSAI logo and 14-digit license number must be displayed on the principal display panel of pre-packaged food.",
+      "keywords": ["fssai", "lic no", "license number", "fssai logo"]
+    },
+    {
+      "rule_id": "FSSAI_NUT_02",
+      "rule_name": "Nutritional Information Declaration",
+      "rule_number": "FSSAI Labelling Regulation 2.2.2",
+      "mandatory": true,
+      "description": "Nutritional facts per 100g or per serving including energy, protein, carbohydrate, total sugar, added sugar, and fat.",
+      "keywords": ["nutritional information", "nutrition facts", "energy", "protein", "carbohydrates", "fat"]
+    },
+    {
+      "rule_id": "FSSAI_VEG_03",
+      "rule_name": "Veg / Non-Veg Symbol Declaration",
+      "rule_number": "FSSAI Labelling Regulation 2.2.3",
+      "mandatory": true,
+      "description": "Green filled circle inside green square for Vegetarian, or Brown filled triangle inside brown square for Non-Vegetarian food.",
+      "keywords": ["veg", "non-veg", "vegetarian", "non-vegetarian", "green dot", "brown dot"]
+    }
+  ]
+}

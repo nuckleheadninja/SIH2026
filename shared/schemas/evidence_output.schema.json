@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EvidenceOutput",
+  "description": "Structured legal evidence returned by Legal Metrology RAG module",
+  "type": "object",
+  "properties": {
+    "check_id": {
+      "type": "string"
+    },
+    "chunk_id": {
+      "type": "string"
+    },
+    "document": {
+      "type": "string"
+    },
+    "rule": {
+      "type": "string"
+    },
+    "sub_rule": {
+      "type": ["string", "null"]
+    },
+    "clause": {
+      "type": ["string", "null"]
+    },
+    "schedule": {
+      "type": ["string", "null"]
+    },
+    "page": {
+      "type": ["integer", "null"]
+    },
+    "text": {
+      "type": "string"
+    },
+    "retrieval_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "citation": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "sub_rule": {
+          "type": ["string", "null"]
+        },
+        "clause": {
+          "type": ["string", "null"]
+        },
+        "schedule": {
+          "type": ["string", "null"]
+        },
+        "page": {
+          "type": ["integer", "null"]
+        }
+      },
+      "required": ["document", "rule"]
+    }
+  },
+  "required": ["check_id", "chunk_id", "document", "rule", "text", "retrieval_score", "citation"]
+}

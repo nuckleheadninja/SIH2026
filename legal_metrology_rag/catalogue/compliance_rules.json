@@ -1,0 +1,60 @@
+{
+  "rules": [
+    {
+      "rule_id": "LMR_RULE_06_1_A",
+      "rule_name": "Manufacturer Name and Address Declaration",
+      "rule_number": "Rule 6(1)(a)",
+      "mandatory": true,
+      "description": "Every package shall bear thereon the name and address of the manufacturer or packer or importer.",
+      "keywords": ["manufacturer", "packer", "importer", "address", "name"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_B",
+      "rule_name": "Country of Origin Declaration",
+      "rule_number": "Rule 6(1)(b)",
+      "mandatory": true,
+      "description": "Every imported package shall bear the name of the country of origin.",
+      "keywords": ["country of origin", "imported", "made in"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_C",
+      "rule_name": "Generic or Common Name Declaration",
+      "rule_number": "Rule 6(1)(c)",
+      "mandatory": true,
+      "description": "The common or generic names of the commodity contained in the package.",
+      "keywords": ["generic name", "common name", "commodity"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_D",
+      "rule_name": "Net Quantity Declaration",
+      "rule_number": "Rule 6(1)(d)",
+      "mandatory": true,
+      "description": "Net quantity, in terms of standard unit of weight or measure or number.",
+      "keywords": ["net quantity", "net wt", "net volume", "g", "kg", "ml", "l"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_E",
+      "rule_name": "Month and Year of Manufacture",
+      "rule_number": "Rule 6(1)(e)",
+      "mandatory": true,
+      "description": "The month and year in which the commodity is manufactured or pre-packed or imported.",
+      "keywords": ["mfg", "mfd", "packing date", "month", "year"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_F",
+      "rule_name": "Maximum Retail Price (MRP)",
+      "rule_number": "Rule 6(1)(f)",
+      "mandatory": true,
+      "description": "The maximum retail price at which the package may be sold to ultimate consumer inclusive of all taxes.",
+      "keywords": ["mrp", "maximum retail price", "incl of all taxes", "rs", "rupees"]
+    },
+    {
+      "rule_id": "LMR_RULE_06_1_G",
+      "rule_name": "Consumer Care Details",
+      "rule_number": "Rule 6(1)(g)",
+      "mandatory": true,
+      "description": "Name, address, telephone number, e-mail address of the person or office who can be contacted in case of consumer complaints.",
+      "keywords": ["consumer care", "customer care", "helpline", "email", "phone"]
+    }
+  ]
+}

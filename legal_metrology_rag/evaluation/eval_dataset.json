@@ -1,0 +1,426 @@
+[
+  {
+    "id": "EQ_001",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(a)",
+    "expected_provisions": ["Rule 6(1)(a)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_002",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(aa)",
+    "expected_provisions": ["Rule 6(1)(aa)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_003",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(c)",
+    "expected_provisions": ["Rule 6(1)(c)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_004",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(d)",
+    "expected_provisions": ["Rule 6(1)(d)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_005",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(da)",
+    "expected_provisions": ["Rule 6(1)(da)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_006",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(e)",
+    "expected_provisions": ["Rule 6(1)(e)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_007",
+    "category": "exact_provision",
+    "query": "Rule 6(1)(f)",
+    "expected_provisions": ["Rule 6(1)(f)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_008",
+    "category": "exact_provision",
+    "query": "Rule 6(2)",
+    "expected_provisions": ["Rule 6(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_009",
+    "category": "exact_provision",
+    "query": "Rule 7(1)",
+    "expected_provisions": ["Rule 7(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_010",
+    "category": "exact_provision",
+    "query": "Rule 7(2)",
+    "expected_provisions": ["Rule 7(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_011",
+    "category": "exact_provision",
+    "query": "Rule 8(1)",
+    "expected_provisions": ["Rule 8(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_012",
+    "category": "exact_provision",
+    "query": "Rule 9(1)(a)",
+    "expected_provisions": ["Rule 9(1)(a)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_013",
+    "category": "exact_provision",
+    "query": "Rule 9(1)(b)",
+    "expected_provisions": ["Rule 9(1)(b)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_014",
+    "category": "exact_provision",
+    "query": "Rule 9(2)",
+    "expected_provisions": ["Rule 9(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_015",
+    "category": "exact_provision",
+    "query": "Rule 9(3)",
+    "expected_provisions": ["Rule 9(3)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_016",
+    "category": "exact_provision",
+    "query": "Rule 10(1)",
+    "expected_provisions": ["Rule 10(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_017",
+    "category": "exact_provision",
+    "query": "Rule 10(2)",
+    "expected_provisions": ["Rule 10(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_018",
+    "category": "exact_provision",
+    "query": "Rule 11(1)",
+    "expected_provisions": ["Rule 11(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_019",
+    "category": "exact_provision",
+    "query": "Rule 11(2)",
+    "expected_provisions": ["Rule 11(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_020",
+    "category": "exact_provision",
+    "query": "Rule 11(4)",
+    "expected_provisions": ["Rule 11(4)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_021",
+    "category": "exact_provision",
+    "query": "Rule 12(1)",
+    "expected_provisions": ["Rule 12(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_022",
+    "category": "exact_provision",
+    "query": "Rule 12(2)",
+    "expected_provisions": ["Rule 12(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_023",
+    "category": "exact_provision",
+    "query": "Rule 12(6)",
+    "expected_provisions": ["Rule 12(6)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_024",
+    "category": "exact_provision",
+    "query": "Rule 13(5)",
+    "expected_provisions": ["Rule 13(5)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_025",
+    "category": "exact_provision",
+    "query": "Rule 13(6)",
+    "expected_provisions": ["Rule 13(6)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_026",
+    "category": "exact_provision",
+    "query": "Rule 14",
+    "expected_provisions": ["Rule 14"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_027",
+    "category": "exact_provision",
+    "query": "Rule 15",
+    "expected_provisions": ["Rule 15"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_028",
+    "category": "exact_provision",
+    "query": "Rule 16",
+    "expected_provisions": ["Rule 16"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_029",
+    "category": "exact_provision",
+    "query": "Rule 23",
+    "expected_provisions": ["Rule 23"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_030",
+    "category": "exact_provision",
+    "query": "Rule 24(a)",
+    "expected_provisions": ["Rule 24(a)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_031",
+    "category": "exact_provision",
+    "query": "Rule 24(b)",
+    "expected_provisions": ["Rule 24(b)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_032",
+    "category": "exact_provision",
+    "query": "Rule 24(c)",
+    "expected_provisions": ["Rule 24(c)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_033",
+    "category": "exact_provision",
+    "query": "Rule 27",
+    "expected_provisions": ["Rule 27"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_034",
+    "category": "exact_provision",
+    "query": "Rule 28",
+    "expected_provisions": ["Rule 28"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_035",
+    "category": "exact_provision",
+    "query": "Rule 31(1)",
+    "expected_provisions": ["Rule 31(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "EQ_036",
+    "category": "exact_provision",
+    "query": "Rule 31(2)",
+    "expected_provisions": ["Rule 31(2)"],
+    "expected_schedule": null
+  },
+
+  {
+    "id": "SQ_001",
+    "category": "schedule_query",
+    "query": "Schedule III commodities when packed",
+    "expected_provisions": ["Rule 11(4)"],
+    "expected_schedule": "III"
+  },
+  {
+    "id": "SQ_002",
+    "category": "schedule_query",
+    "query": "Third Schedule provisions",
+    "expected_provisions": ["Rule 11(4)"],
+    "expected_schedule": "III"
+  },
+  {
+    "id": "SQ_003",
+    "category": "schedule_query",
+    "query": "Schedule II standard package sizes",
+    "expected_provisions": [],
+    "expected_schedule": "II"
+  },
+  {
+    "id": "SQ_004",
+    "category": "schedule_query",
+    "query": "Second Schedule standard package sizes",
+    "expected_provisions": [],
+    "expected_schedule": "II"
+  },
+
+  {
+    "id": "NLQ_001",
+    "category": "natural_language",
+    "query": "What must be printed as MRP?",
+    "expected_provisions": ["Rule 6(1)(e)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_002",
+    "category": "natural_language",
+    "query": "What information is required for an imported package?",
+    "expected_provisions": ["Rule 6(1)(a)", "Rule 6(1)(aa)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_003",
+    "category": "natural_language",
+    "query": "What are the consumer complaint details?",
+    "expected_provisions": ["Rule 6(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_004",
+    "category": "natural_language",
+    "query": "How should net quantity be declared?",
+    "expected_provisions": ["Rule 6(1)(c)", "Rule 12(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_005",
+    "category": "natural_language",
+    "query": "What is the minimum height of numerals?",
+    "expected_provisions": ["Rule 7(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_006",
+    "category": "natural_language",
+    "query": "What declarations are required on a wholesale package?",
+    "expected_provisions": ["Rule 24(a)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_007",
+    "category": "natural_language",
+    "query": "Can MRP include all taxes?",
+    "expected_provisions": ["Rule 6(1)(e)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_008",
+    "category": "natural_language",
+    "query": "Where must the principal display panel be located?",
+    "expected_provisions": ["Rule 8(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_009",
+    "category": "natural_language",
+    "query": "What is the rule for multi-pack net quantity?",
+    "expected_provisions": ["Rule 13(6)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "NLQ_010",
+    "category": "natural_language",
+    "query": "Are SI units mandatory for net quantity symbols?",
+    "expected_provisions": ["Rule 13(5)"],
+    "expected_schedule": null
+  },
+
+  {
+    "id": "PQ_001",
+    "category": "paraphrased",
+    "query": "Where should the net weight notice appear?",
+    "expected_provisions": ["Rule 6(1)(c)", "Rule 8(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "PQ_002",
+    "category": "paraphrased",
+    "query": "Rules for wholesale container labeling",
+    "expected_provisions": ["Rule 24(a)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "PQ_003",
+    "category": "paraphrased",
+    "query": "Exclusion of wrapper weight from net content",
+    "expected_provisions": ["Rule 11(1)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "PQ_004",
+    "category": "paraphrased",
+    "query": "Helpline email and contact for customer grievances",
+    "expected_provisions": ["Rule 6(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "PQ_005",
+    "category": "paraphrased",
+    "query": "Letter size specifications on display panel",
+    "expected_provisions": ["Rule 7(2)"],
+    "expected_schedule": null
+  },
+
+  {
+    "id": "AQ_001",
+    "category": "ambiguous_related",
+    "query": "Contrast and color legibility for price declarations",
+    "expected_provisions": ["Rule 9(1)(b)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "AQ_002",
+    "category": "ambiguous_related",
+    "query": "Transparent outer wrapper visibility requirements",
+    "expected_provisions": ["Rule 9(2)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "AQ_003",
+    "category": "ambiguous_related",
+    "query": "Exaggerated or misleading net quantity presentation",
+    "expected_provisions": ["Rule 12(6)"],
+    "expected_schedule": null
+  },
+  {
+    "id": "AQ_004",
+    "category": "ambiguous_related",
+    "query": "Dimensions and sheet count for plastic or paper sheets",
+    "expected_provisions": ["Rule 16"],
+    "expected_schedule": null
+  },
+  {
+    "id": "AQ_005",
+    "category": "ambiguous_related",
+    "query": "Corporate name vs brand name on pre-packed goods",
+    "expected_provisions": ["Rule 10(2)"],
+    "expected_schedule": null
+  }
+]

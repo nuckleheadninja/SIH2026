@@ -1,0 +1,55 @@
+{
+  "image_id": "sample_pkg_001",
+  "text_blocks": [
+    {
+      "block_id": "blk_1",
+      "text": "MRP Rs. 120.00 (Incl. of all taxes)",
+      "confidence": 0.96,
+      "bbox": [100.0, 200.0, 300.0, 40.0],
+      "layout": {
+        "font_height_px": 24.0,
+        "position": "top_right"
+      }
+    },
+    {
+      "block_id": "blk_2",
+      "text": "Net Qty: 500 g",
+      "confidence": 0.98,
+      "bbox": [100.0, 250.0, 200.0, 30.0],
+      "layout": {
+        "font_height_px": 20.0,
+        "position": "middle_left"
+      }
+    },
+    {
+      "block_id": "blk_3",
+      "text": "Mfg Date: 05/2026",
+      "confidence": 0.92,
+      "bbox": [100.0, 290.0, 180.0, 25.0],
+      "layout": {
+        "font_height_px": 18.0,
+        "position": "bottom_left"
+      }
+    },
+    {
+      "block_id": "blk_4",
+      "text": "Mfd By: Acme Consumer Care Pvt Ltd, Industrial Area, Phase 2, New Delhi 110020",
+      "confidence": 0.95,
+      "bbox": [100.0, 330.0, 450.0, 50.0],
+      "layout": {
+        "font_height_px": 14.0,
+        "position": "bottom_center"
+      }
+    },
+    {
+      "block_id": "blk_5",
+      "text": "Consumer Care Email: care@acmeconsumer.com, Tel: 1800-111-2222",
+      "confidence": 0.94,
+      "bbox": [100.0, 390.0, 450.0, 40.0],
+      "layout": {
+        "font_height_px": 14.0,
+        "position": "bottom_center"
+      }
+    }
+  ]
+}

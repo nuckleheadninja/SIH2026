@@ -1,0 +1,27 @@
+{
+  "image_id": "sample_pkg_001",
+  "commodity_type": "food",
+  "extracted_fields": [
+    {
+      "field_name": "mrp",
+      "raw_text": "MRP Rs. 120.00 (Incl. of all taxes)",
+      "normalized_value": "Rs. 120.00",
+      "confidence": 0.96,
+      "bbox": [100.0, 200.0, 300.0, 40.0]
+    },
+    {
+      "field_name": "net_quantity",
+      "raw_text": "Net Qty: 500 g",
+      "normalized_value": "500 g",
+      "confidence": 0.98,
+      "bbox": [100.0, 250.0, 200.0, 30.0]
+    },
+    {
+      "field_name": "fssai_license",
+      "raw_text": "FSSAI Lic No. 10012011000123",
+      "normalized_value": "10012011000123",
+      "confidence": 0.94,
+      "bbox": [100.0, 310.0, 350.0, 30.0]
+    }
+  ]
+}

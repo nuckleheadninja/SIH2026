@@ -1,0 +1,531 @@
+{
+  "summary": {
+    "total_checks": 40,
+    "matched": 40,
+    "mismatch": 0,
+    "not_found": 0,
+    "pass_rate": 1.0
+  },
+  "details": [
+    {
+      "check_id": "LM_MFR_ADDR_001",
+      "requirement_name": "Name and address of manufacturer must be declared; where manufacturer differs from packer, both manufacturer and packer details; imported package must mention importer",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(a)",
+        "page": 10
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(a)_10",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_ORIGIN_001",
+      "requirement_name": "Country of origin/manufacture/assembly for imported products",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(aa)",
+        "page": 10
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(aa)_10",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_COMMODITY_NAME_001",
+      "requirement_name": "Common/generic name of commodity must be declared",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(b)",
+        "page": 10
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(b)_10",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MULTI_PRODUCT_001",
+      "requirement_name": "For packages containing more than one product, name and number/quantity of each product",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(b)",
+        "page": 10
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(b)_10",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_NET_QTY_001",
+      "requirement_name": "Net quantity must be declared in standard unit of weight/measure, or number where sold by number",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(c)",
+        "page": 11
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(c)_11",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DATE_001",
+      "requirement_name": "Month and year of manufacture/pre-packing/import must be declared, subject to applicable exceptions/other-law provisions",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(d)",
+        "page": 11
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(d)_11",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_BEST_BEFORE_001",
+      "requirement_name": "Where commodity may become unfit for human consumption after a period, best-before/use-by date must be declared unless another law provides for it",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(da)",
+        "page": 11
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(da)_11",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MRP_001",
+      "requirement_name": "Retail sale price / MRP must be declared",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(e)",
+        "page": 12
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(e)_12",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MRP_TAX_001",
+      "requirement_name": "MRP must indicate that it is the maximum retail price inclusive of all taxes",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(e)",
+        "page": 12
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(e)_12",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MRP_CURRENCY_001",
+      "requirement_name": "Retail sale price must be expressed in Indian currency",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(e)",
+        "page": 12
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(e)_12",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DIMENSIONS_001",
+      "requirement_name": "Dimensions must be declared where dimensions of the commodity are relevant",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(f)",
+        "page": 12
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(f)_12",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_OTHER_DECL_001",
+      "requirement_name": "Other declarations specifically required elsewhere in the Rules",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(1)",
+        "clause": "6(1)(g)",
+        "page": 13
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(1)_6(1)(a)_10",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_CONSUMER_CARE_001",
+      "requirement_name": "Name, address, telephone number and e-mail address, if available, of person/office for consumer complaints",
+      "target_citation": {
+        "rule": "6",
+        "sub_rule": "6(2)",
+        "clause": null,
+        "page": 14
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_6_6(2)_main_13",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DISPLAY_PANEL_001",
+      "requirement_name": "Required declarations must appear on the principal display panel",
+      "target_citation": {
+        "rule": "8",
+        "sub_rule": "8(1)",
+        "clause": null,
+        "page": 20
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_8_8(1)_main_20",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_QTY_CLEAR_SPACE_001",
+      "requirement_name": "Area surrounding quantity declaration must have prescribed clear space",
+      "target_citation": {
+        "rule": "8",
+        "sub_rule": "8(1)",
+        "clause": null,
+        "page": 20
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_8_8(1)_main_20",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DECL_LEGIBILITY_001",
+      "requirement_name": "Required declarations must be legible and prominent",
+      "target_citation": {
+        "rule": "9",
+        "sub_rule": "9(1)",
+        "clause": "9(1)(a)",
+        "page": 20
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_9_9(1)_9(1)(a)_20",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MRP_CONTRAST_001",
+      "requirement_name": "MRP and net-quantity numerals must contrast conspicuously with label background, subject to stated exceptions",
+      "target_citation": {
+        "rule": "9",
+        "sub_rule": "9(1)",
+        "clause": "9(1)(b)",
+        "page": 21
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_9_9(1)_9(1)(b)_21",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_LIQUID_VISIBILITY_001",
+      "requirement_name": "Declaration must not require reading through the liquid commodity",
+      "target_citation": {
+        "rule": "9",
+        "sub_rule": "9(2)",
+        "clause": null,
+        "page": 21
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_9_9(2)_main_21",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_OUTER_WRAPPER_001",
+      "requirement_name": "Outside container/wrapper must contain required declarations unless the specified transparency/outer-package conditions apply",
+      "target_citation": {
+        "rule": "9",
+        "sub_rule": "9(3)",
+        "clause": null,
+        "page": 21
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_9_9(3)_main_21",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_ADDRESS_COMPLETE_001",
+      "requirement_name": "Declared manufacturer/packer/importer address must satisfy the rule's definition of complete address",
+      "target_citation": {
+        "rule": "10",
+        "sub_rule": "10(1)",
+        "clause": null,
+        "page": 21
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_10_10(1)_main_21",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_CORPORATE_NAME_001",
+      "requirement_name": "Manufacturer/packer/importer name must be actual corporate/business name",
+      "target_citation": {
+        "rule": "10",
+        "sub_rule": "10(2)",
+        "clause": null,
+        "page": 22
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_10_10(2)_main_22",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_NET_QTY_EXCLUDE_PACKAGING_001",
+      "requirement_name": "Net quantity excludes wrappers and packaging material",
+      "target_citation": {
+        "rule": "11",
+        "sub_rule": "11(1)",
+        "clause": null,
+        "page": 22
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_11_11(1)_main_22",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_NET_QTY_RECEIVED_001",
+      "requirement_name": "Where environmental variation is not relevant, declared quantity should correspond to quantity received by consumer",
+      "target_citation": {
+        "rule": "11",
+        "sub_rule": "11(2)",
+        "clause": null,
+        "page": 22
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_11_11(2)_main_22",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_WHEN_PACKED_001",
+      "requirement_name": "'When packed' qualification allowed only for commodities satisfying the applicable significant-variation conditions",
+      "target_citation": {
+        "rule": "11",
+        "sub_rule": "11(4)",
+        "clause": null,
+        "page": 23
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_11_11(4)_main_23",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_QTY_UNIT_001",
+      "requirement_name": "Quantity must use an appropriate unit of weight, measure or number giving adequate consumer information",
+      "target_citation": {
+        "rule": "12",
+        "sub_rule": "12(1)",
+        "clause": null,
+        "page": 23
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_12_12(1)_main_23",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_QTY_FORM_001",
+      "requirement_name": "Solid/semi-solid/viscous -> mass; linear commodity -> length; area commodity -> area; liquid -> volume; number-sold -> number, subject to Fourth Schedule",
+      "target_citation": {
+        "rule": "12",
+        "sub_rule": "12(2)",
+        "clause": null,
+        "page": 23
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_12_12(2)_main_23",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_QTY_MISLEADING_001",
+      "requirement_name": "Quantity declaration must not create an exaggerated, misleading or inadequate impression",
+      "target_citation": {
+        "rule": "12",
+        "sub_rule": "12(6)",
+        "clause": null,
+        "page": 23
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_12_12(6)_main_23",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_SI_UNITS_001",
+      "requirement_name": "Net quantity must use International System of Units, subject to applicable provisions",
+      "target_citation": {
+        "rule": "13",
+        "sub_rule": "13(5)",
+        "clause": null,
+        "page": 24
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_13_13(5)_main_24",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_MULTIPACK_QTY_001",
+      "requirement_name": "Multiple packages of same commodity must indicate number of packages and quantity of each package",
+      "target_citation": {
+        "rule": "13",
+        "sub_rule": "13(6)",
+        "clause": null,
+        "page": 25
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_13_13(6)_main_25",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_TEXT_DIMENSION_001",
+      "requirement_name": "Certain textile/finished commodities require number and finished dimensions",
+      "target_citation": {
+        "rule": "14",
+        "sub_rule": null,
+        "clause": null,
+        "page": 25
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_14_main_main_25",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DIM_WEIGHT_001",
+      "requirement_name": "Where dimensions/weight relate to price, corresponding declaration must be included",
+      "target_citation": {
+        "rule": "15",
+        "sub_rule": null,
+        "clause": null,
+        "page": 25
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_15_main_main_25",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_SHEET_COUNT_001",
+      "requirement_name": "Packages containing specified sheets must declare number of usable sheets and dimensions",
+      "target_citation": {
+        "rule": "16",
+        "sub_rule": null,
+        "clause": null,
+        "page": 25
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_16_main_main_25",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_WHOLESALE_MFR_001",
+      "requirement_name": "Wholesale package must declare manufacturer/importer/packer information as prescribed",
+      "target_citation": {
+        "rule": "24",
+        "sub_rule": "24(a)",
+        "clause": null,
+        "page": 35
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_24_24(a)_main_35",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_WHOLESALE_ID_001",
+      "requirement_name": "Wholesale package must identify commodity",
+      "target_citation": {
+        "rule": "24",
+        "sub_rule": "24(b)",
+        "clause": null,
+        "page": 35
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_24_24(b)_main_35",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_WHOLESALE_QTY_001",
+      "requirement_name": "Wholesale package must declare total number of retail packages or net quantity",
+      "target_citation": {
+        "rule": "24",
+        "sub_rule": "24(c)",
+        "clause": null,
+        "page": 35
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_24_24(c)_main_35",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_ADV_NETQTY_001",
+      "requirement_name": "Advertisement mentioning retail sale price must contain net quantity/number declaration",
+      "target_citation": {
+        "rule": "31",
+        "sub_rule": "31(1)",
+        "clause": null,
+        "page": 36
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_31_31(1)_main_36",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_ADV_FONT_001",
+      "requirement_name": "Net-quantity font size in advertisement must be same as retail sale price",
+      "target_citation": {
+        "rule": "31",
+        "sub_rule": "31(2)",
+        "clause": null,
+        "page": 36
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_31_31(2)_main_36",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_REGISTRATION_001",
+      "requirement_name": "Manufacturer/packer/importer registration requirements",
+      "target_citation": {
+        "rule": "27",
+        "sub_rule": null,
+        "clause": null,
+        "page": 35
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_27_main_main_35",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_SHORT_ADDRESS_001",
+      "requirement_name": "Shorter address may be used only where registered/permitted under Rule 28",
+      "target_citation": {
+        "rule": "28",
+        "sub_rule": null,
+        "clause": null,
+        "page": 36
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_28_main_main_36",
+      "reason": "Metadata and requirement text content are fully consistent"
+    },
+    {
+      "check_id": "LM_DECEPTIVE_PACKAGE_001",
+      "requirement_name": "Package must not be designed to deliberately give exaggerated/misleading impression of quantity",
+      "target_citation": {
+        "rule": "23",
+        "sub_rule": null,
+        "clause": null,
+        "page": 33
+      },
+      "status": "MATCHED",
+      "matched_chunk_id": "chk_lm_23_main_main_33",
+      "reason": "Metadata and requirement text content are fully consistent"
+    }
+  ]
+}

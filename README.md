@@ -1,128 +1,71 @@
-# OCR + Layout Analysis Module for AI-Based Legal Metrology & FSSAI Compliance Checker
+# Package Compliance Checker
 
-**SIH Problem Statement ID:** 26034 | **Ministry of Consumer Affairs**
+Automated compliance verification system for pre-packaged commodities against Legal Metrology Rules and domain-specific regulations (e.g., FSSAI).
 
-This repository contains the foundational **OCR & Spatial Layout Analysis Module** (Stages 1–4 of the overall compliance verification pipeline) designed for scanning packaged food/commodity product labels.
+## Directory Structure & Ownership
 
----
-
-## Key Features
-
-1. **Evidence-Preserving Schema**: Retains `raw_text`, `normalized_text`, polygon vertices, bounding boxes, confidence %, orientation angles, font pixel height, and spatial grid regions without discarding original OCR output.
-2. **Deterministic Post-Processing**: Performs conservative normalization (whitespace, unicode, standard label prefixes like `M.R.P.` to `MRP`) **without hallucination**. Never silently changes ambiguous text like `₹1O0` to `₹100`.
-3. **Image Quality Inspection**: Performs blur scoring (Laplacian variance), contrast inspection, and brightness validation. Warns without rejecting imperfect real-world photos.
-4. **Adaptive Preprocessing Pipeline**: Configurable profiles (`DEFAULT`, `LOW_CONTRAST`, `NOISY`, `PERSPECTIVE`, `AUTO`) supporting CLAHE, unsharp masking, bilateral denoising, deskewing, and perspective correction.
-5. **3x3 Spatial Grid Classification**: Assigns spatial regions (`top-left`, `top-center`, `top-right`, `middle-left`, `center`, `middle-right`, `bottom-left`, `bottom-center`, `bottom-right`) based on normalized image coordinates (`coordinate_reference: "image"`).
-6. **Pairwise Spatial Relationships**: Calculates deterministic geometric relationships (`above`, `below`, `left_of`, `right_of`, `near`, `aligned_with`, `same_region`) to assist downstream Field Extraction and RAG reasoning.
-7. **Modular OCR Architecture**: Modular `BaseOCREngine` interface supporting `PaddleOCR` (primary) and `EasyOCR` with graceful fallback capabilities.
-
----
-
-## Directory Structure
-
-```text
-SIH2026/
+```
+package-compliance-checker/
+├── README.md                              # Project overview, who owns what, how to run end-to-end
+├── .gitignore
+├── .github/
+│   └── workflows/
+│       ├── test-ocr.yml                   # CI for ocr_module only
+│       └── test-rag.yml                   # CI for legal_metrology_rag only
 │
-├── ocr/                  # OCR Engine adapters & conservative postprocessor
-│   ├── base.py           # Abstract OCR engine interface
-│   ├── paddle_engine.py  # PaddleOCR adapter with fallback
-│   ├── easyocr_engine.py # EasyOCR adapter
-│   └── postprocessor.py # Conservative text normalization
+├── shared/                                 # ★ THE CONTRACT — both agree early, edit rarely
+│   ├── schemas/
+│   │   ├── ocr_output.schema.json          # text, bbox, confidence, layout
+│   │   ├── field_extraction.schema.json    # field, value, bbox, confidence, commodity_type
+│   │   ├── compliance_check.schema.json    # structured check query format
+│   │   └── evidence_output.schema.json     # RAG's returned evidence + citation format
+│   ├── sample_data/
+│   │   ├── sample_ocr_output.json
+│   │   ├── sample_field_extraction_output.json
+│   │   └── sample_compliance_check.json
+│   └── constants.py                        # PASS/FAIL/UNCERTAIN/NOT_APPLICABLE, domain names, etc.
 │
-├── preprocessing/        # Image validation & preprocessing pipeline
-│   ├── validation.py     # Quality inspection & blur scoring
-│   ├── resize.py         # Aspect ratio preserving resize
-│   ├── enhancement.py    # CLAHE, Denoise, Sharpening, Thresholding
-│   ├── perspective.py    # Deskewing & Perspective transform
-│   └── pipeline.py       # Configurable preprocessing pipeline
+├── ocr_module/                             # ★ OCR & FIELD EXTRACTION MODULE
+│   ├── ocr/                                # text_detector.py, confidence_scorer.py
+│   ├── layout/                             # layout_analyzer.py
+│   ├── field_extraction/                   # field_mapper.py, field_rules.py, commodity_classifier.py
+│   ├── tests/
+│   ├── requirements.txt
+│   └── README.md
 │
-├── layout/               # Geometry & spatial analysis
-│   ├── geometry.py       # Bounding box, center, area, angle math
-│   ├── region.py         # 3x3 Grid region classifier
-│   └── analyzer.py       # Reading order & spatial relations
+├── legal_metrology_rag/                    # ★ MULTI-DOMAIN RAG MODULE
+│   ├── rag_core/                           # SHARED ENGINE — used by all domain RAGs
+│   │   ├── ingestion/                      # pdf_loader, text_extractor, structure_parser, metadata_extractor
+│   │   ├── chunking/                       # legal_chunker, hierarchy
+│   │   ├── embeddings/                     # embedder, model_config
+│   │   ├── retrieval/                      # vector, keyword, hybrid_retriever, reranker
+│   │   ├── database/                       # vector_store (add, search, delete), metadata_store
+│   │   ├── evidence/                       # evidence_builder, citation
+│   │   └── base_rag.py                     # BaseComplianceRAG abstract base class
+│   ├── domains/
+│   │   ├── legal_metrology/                # Legal Metrology domain RAG (LegalMetrologyRAG)
+│   │   └── fssai/                          # FSSAI Food Safety domain RAG (FSSAIRAG)
+│   ├── dispatcher/
+│   │   └── domain_router.py                # Routes queries (always legal_metrology; if food -> also fssai)
+│   ├── evaluation/                         # Benchmarks & retrieval/citation evaluators
+│   ├── tests/                              # Integration tests across rag_core + domains
+│   ├── config.yaml
+│   ├── requirements.txt
+│   ├── main.py
+│   └── README.md
 │
-├── models/               # Pydantic schemas
-│   ├── image_schema.py   # Quality report & image metadata
-│   └── ocr_schema.py     # OCR Block, Geometry, Layout, Result models
+├── compliance_engine/                      # ★ COMPLIANCE DECISION ENGINE (Stub)
+│   ├── engine.py                           # Field Extraction output + RAG evidence -> PASS/FAIL/UNCERTAIN
+│   ├── tests/
+│   └── README.md                           # Marked "not yet implemented"
 │
-├── utils/                # Utilities & Visualizations
-│   ├── image_utils.py    # I/O functions
-│   ├── visualization.py  # Debug overlay generator
-│   └── logging_utils.py  # Standardized console logging
-│
-├── tests/                # Automated unit tests
-├── input/                # Input image directory
-├── output/               # Output JSON and annotated image directory
-├── config.yaml           # Centralized configuration
-├── requirements.txt      # Dependency specification
-└── main.py               # CLI entrypoint pipeline
+└── integration/
+    ├── end_to_end_test.py                  # Full pipeline: OCR -> Dispatcher -> RAG(s) -> Engine
+    └── README.md
 ```
 
----
-
-## Quick Start
-
-### 1. Installation
+## Running Tests
 
 ```bash
-pip install -r requirements.txt
+python -m pytest shared/ ocr_module/ legal_metrology_rag/ compliance_engine/ integration/
 ```
-
-### 2. Run Inference on Sample Product Label
-
-If no input image is provided, running `main.py` automatically generates a synthetic sample packaged product label in `input/product_001.jpg` and runs the complete pipeline:
-
-```bash
-python main.py
-```
-
-To run on a custom image or folder:
-
-```bash
-python main.py --input input/my_product.jpg --config config.yaml
-```
-
-To enable multi-pass OCR:
-
-```bash
-python main.py --input input/product_001.jpg --multi-pass
-```
-
-### 3. Run Unit Tests
-
-Execute the unit test suite covering validation, geometry, relative coordinates, region classification, schemas, and end-to-end OCR execution:
-
-```bash
-pytest tests/
-```
-
----
-
-## Output Artifacts
-
-For every processed image `product_001.jpg`, an output folder is generated at `output/product_001/`:
-
-1. **`ocr_result.json`**: Structured evidence JSON containing image metadata, quality inspection report, applied preprocessing profile, OCR engine details, OCR text blocks, and spatial relationships.
-2. **`annotated.jpg`**: Visual debug overlay showing bounding polygons, text block IDs, OCR raw text, confidence score %, and spatial region tags.
-3. **`preprocessed.jpg`**: The exact image fed into the OCR engine after CLAHE/denoising/sharpening.
-
----
-
-## CPU vs GPU Execution
-
-Execution device is controlled via `config.yaml`:
-
-```yaml
-ocr:
-  engine: paddleocr
-  use_gpu: false  # Set to true when running on GPU / CUDA enabled environment
-```
-
----
-
-## Integration Contract for Next Modules
-
-The `ocr_result.json` produced by this module serves as the immutable evidence contract for downstream modules:
-
-1. **Field Extraction Module**: Consumes `ocr_blocks` and maps text blocks to legal fields (`MRP`, `NET QTY`, `MFG DATE`, `ADDRESS`, `INGREDIENTS`, `FSSAI LIC NO`).
-2. **Legal Metrology & FSSAI RAG Modules**: Consumes extracted fields and spatial regions to perform citable legal compliance checks.
