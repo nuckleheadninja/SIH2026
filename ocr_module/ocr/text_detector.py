@@ -39,7 +39,13 @@ class TextDetector:
             from paddleocr import PaddleOCR
             self._paddle_ocr = PaddleOCR(
                 lang=self.lang,
+                ocr_version="PP-OCRv4",
                 enable_mkldnn=self.enable_mkldnn,
+                use_doc_orientation_classify=False,
+                use_doc_unwarping=False,
+                use_textline_orientation=False,
+                text_det_limit_side_len=960,
+                text_recognition_batch_size=16,
             )
         except Exception as e:
             print(f"[TextDetector] PaddleOCR initialization skipped or failed: {e}. Attempting EasyOCR fallback.", file=sys.stderr)
@@ -96,25 +102,62 @@ class TextDetector:
 
         self._init_engines()
 
+        # Dynamic downscaling for high-resolution images to drastically accelerate OCR inference
+        orig_h, orig_w = img.shape[:2]
+        max_dim = 720
+        scale_x = 1.0
+        scale_y = 1.0
+        if max(orig_h, orig_w) > max_dim:
+            scale = max_dim / float(max(orig_h, orig_w))
+            new_w = max(1, int(round(orig_w * scale)))
+            new_h = max(1, int(round(orig_h * scale)))
+            img_ocr = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+            scale_x = orig_w / float(new_w)
+            scale_y = orig_h / float(new_h)
+        else:
+            img_ocr = img
+
         blocks = []
         if self._paddle_ocr:
             try:
-                blocks = self._run_paddle(img)
+                blocks = self._run_paddle(img_ocr)
             except Exception as e:
                 print(f"[TextDetector] PaddleOCR inference error: {e}. Switching to EasyOCR.", file=sys.stderr)
                 if self._easy_ocr is None:
                     import easyocr
                     self._easy_ocr = easyocr.Reader([self.lang], gpu=self.use_gpu)
-                blocks = self._run_easyocr(img)
+                blocks = self._run_easyocr(img_ocr)
         elif self._easy_ocr:
-            blocks = self._run_easyocr(img)
+            blocks = self._run_easyocr(img_ocr)
         else:
             raise RuntimeError("No OCR engine available. Please install paddleocr or easyocr.")
+
+        # Rescale bounding boxes back to original input coordinates
+        if scale_x != 1.0 or scale_y != 1.0:
+            for blk in blocks:
+                bx, by, bw, bh = blk["bbox"]
+                blk["bbox"] = [
+                    int(round(bx * scale_x)),
+                    int(round(by * scale_y)),
+                    int(round(bw * scale_x)),
+                    int(round(bh * scale_y))
+                ]
+                blk["font_height_px"] = blk["bbox"][3]
 
         return blocks
 
     def _run_paddle(self, img: np.ndarray) -> List[Dict[str, Any]]:
-        result = self._paddle_ocr.ocr(img, cls=True)
+        if hasattr(self._paddle_ocr, "predict"):
+            try:
+                result = list(self._paddle_ocr.predict(img))
+            except Exception:
+                result = self._paddle_ocr.ocr(img)
+        else:
+            try:
+                result = self._paddle_ocr.ocr(img)
+            except TypeError:
+                result = self._paddle_ocr.ocr(img, cls=True)
+
         blocks = []
         if not result:
             return blocks
@@ -169,7 +212,7 @@ class TextDetector:
         return blocks
 
     def _run_easyocr(self, img: np.ndarray) -> List[Dict[str, Any]]:
-        results = self._easy_ocr.readtext(img)
+        results = self._easy_ocr.readtext(img, batch_size=16)
         blocks = []
         for i, (poly, text, score) in enumerate(results):
             bbox = self._poly_to_bbox(poly)

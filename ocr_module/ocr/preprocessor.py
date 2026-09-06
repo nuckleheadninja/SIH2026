@@ -21,14 +21,14 @@ class PackagingPreprocessor:
         if img is None or img.size == 0:
             return img
 
-        # 1. Specular highlight inpainting
+        # 1. Specular highlight inpainting (only if significant highlights exist)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
-        _, highlight_mask = cv2.threshold(gray, 245, 255, cv2.THRESH_BINARY)
+        _, highlight_mask = cv2.threshold(gray, 248, 255, cv2.THRESH_BINARY)
+        nonzero = cv2.countNonZero(highlight_mask)
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
-        dilated_mask = cv2.dilate(highlight_mask, kernel, iterations=1)
-
-        if np.count_nonzero(dilated_mask) > 0 and np.count_nonzero(dilated_mask) < (img.shape[0] * img.shape[1] * 0.15):
+        if 50 < nonzero < (img.shape[0] * img.shape[1] * 0.10):
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+            dilated_mask = cv2.dilate(highlight_mask, kernel, iterations=1)
             inpainted = cv2.inpaint(img, dilated_mask, inpaintRadius=3, flags=cv2.INPAINT_TELEA)
         else:
             inpainted = img
@@ -46,7 +46,7 @@ class PackagingPreprocessor:
             return clahe.apply(inpainted)
 
     @staticmethod
-    def dewrinkle_bilateral(img: np.ndarray, d: int = 7, sigma_color: float = 50.0, sigma_space: float = 50.0) -> np.ndarray:
+    def dewrinkle_bilateral(img: np.ndarray, d: int = 5, sigma_color: float = 40.0, sigma_space: float = 40.0) -> np.ndarray:
         """
         Smoothes plastic pouch crinkles and foil micro-shadows while preserving crisp text edges.
         """
