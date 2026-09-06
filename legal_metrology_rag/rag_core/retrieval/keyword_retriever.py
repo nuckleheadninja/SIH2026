@@ -1,7 +1,7 @@
 """BM25 Keyword Retriever for exact legal clause and term matching using rank_bm25."""
 
 import re
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Union
 from rank_bm25 import BM25Okapi
 
 
