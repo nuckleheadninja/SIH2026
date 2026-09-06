@@ -17,6 +17,7 @@ class FieldRules:
     # Net Quantity Rules (value + metric unit)
     NET_QTY_PATTERNS = [
         re.compile(r"(?:NET\s*(?:QTY|QUANTITY|WT|WEIGHT|CONTENT)?)[^\d]*([0-9]+(?:\.[0-9]+)?)\s*(kg|g|gm|gms|mg|l|ltr|litres?|ml|piece|pieces|pcs|count|u|units?)\b", re.IGNORECASE),
+        re.compile(r"\b([0-9]+(?:\.[0-9]+)?)\s*(kg|g|gm|gms|l|ltr|ml)\s*(?:NET\s*(?:QTY|QUANTITY|WT|WEIGHT|CONTENT)?)\b", re.IGNORECASE),
         re.compile(r"\b([0-9]+(?:\.[0-9]+)?)\s*(kg|g|gm|gms|l|ltr|ml)\b", re.IGNORECASE)
     ]
 

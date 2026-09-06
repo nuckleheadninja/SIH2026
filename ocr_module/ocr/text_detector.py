@@ -104,7 +104,7 @@ class TextDetector:
 
         # Dynamic downscaling for high-resolution images to drastically accelerate OCR inference
         orig_h, orig_w = img.shape[:2]
-        max_dim = 720
+        max_dim = 1280
         scale_x = 1.0
         scale_y = 1.0
         if max(orig_h, orig_w) > max_dim:

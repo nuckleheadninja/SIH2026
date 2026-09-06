@@ -7,6 +7,7 @@ Supports:
 - 📁 Image File Upload (JPG, PNG, WEBP)
 """
 
+import base64
 import hashlib
 import io
 import json
@@ -22,8 +23,11 @@ from PIL import Image
 # ── Ensure frontend & root are on sys.path ──────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent
+BACKEND_DIR = PROJECT_ROOT / "backend"
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
@@ -244,6 +248,9 @@ if "last_scan_result" not in st.session_state:
 if "last_scan_hash" not in st.session_state:
     st.session_state["last_scan_hash"] = None
 
+if "staged_panels" not in st.session_state:
+    st.session_state["staged_panels"] = []
+
 # ── Header ─────────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="header-band">
@@ -368,12 +375,25 @@ with col_cam:
 
             st.image(active_bytes, caption="Captured Food Label", use_container_width=True)
 
-            if st.button("🗑️ Clear / Retake Photo", use_container_width=True):
-                st.session_state["captured_image_bytes"] = None
-                st.session_state["captured_source_info"] = None
-                st.session_state["last_scan_result"] = None
-                st.session_state["last_scan_hash"] = None
-                st.rerun()
+            col_cam_act1, col_cam_act2 = st.columns(2)
+            with col_cam_act1:
+                if st.button("➕ Add to Multi-Panel Audit", use_container_width=True):
+                    p_num = len(st.session_state["staged_panels"]) + 1
+                    st.session_state["staged_panels"].append({
+                        "bytes": active_bytes,
+                        "name": f"ip_camera_panel_{p_num}.jpg",
+                        "source": f"IP Camera (Panel {p_num})",
+                    })
+                    st.session_state["captured_image_bytes"] = None
+                    st.toast(f"✅ Staged as Panel {p_num}!")
+                    st.rerun()
+            with col_cam_act2:
+                if st.button("🗑️ Clear / Retake Photo", use_container_width=True):
+                    st.session_state["captured_image_bytes"] = None
+                    st.session_state["captured_source_info"] = None
+                    st.session_state["last_scan_result"] = None
+                    st.session_state["last_scan_hash"] = None
+                    st.rerun()
 
         # Instructions accordion
         with st.expander("📖 Setup Guide: How to connect your Phone Camera"):
@@ -402,26 +422,66 @@ with col_cam:
             active_source = "Built-in Webcam"
             meta = get_image_metadata(active_bytes)
             st.caption(f"Webcam frame: {meta['width']}×{meta['height']} ({meta['size_kb']} KB)")
+            if st.button("➕ Add to Multi-Panel Audit", key="add_webcam_panel", use_container_width=True):
+                p_num = len(st.session_state["staged_panels"]) + 1
+                st.session_state["staged_panels"].append({
+                    "bytes": active_bytes,
+                    "name": f"webcam_panel_{p_num}.jpg",
+                    "source": f"Webcam (Panel {p_num})",
+                })
+                st.toast(f"✅ Staged as Panel {p_num}!")
+                st.rerun()
 
-    # ── Option 3: Upload Image File ────────────────────────────────────────────
+    # ── Option 3: Upload Image Files ───────────────────────────────────────────
     elif source_mode == "📁 Upload Image File":
         st.markdown("---")
-        uploaded_file = st.file_uploader(
-            "Choose a product label photo",
+        st.markdown("**Upload one or multiple photos of packaging panels (Front, Back, Side, Crimp, etc.):**")
+        uploaded_files = st.file_uploader(
+            "Choose packaging label photos (Multi-panel supported)",
             type=["jpg", "jpeg", "png", "webp"],
+            accept_multiple_files=True,
             key="file_uploader_cam",
+            help="Select multiple photos to analyze front, back, and side panels together in one consolidated compliance report!",
         )
-        if uploaded_file:
-            active_bytes = uploaded_file.getvalue()
-            active_source = f"Uploaded: {uploaded_file.name}"
-            meta = get_image_metadata(active_bytes)
-            st.markdown(
-                f'<div class="resolution-badge" style="background: {meta["quality_color"]}22; color: {meta["quality_color"]}; border-color: {meta["quality_color"]}55;">'
-                f'Resolution: <b>{meta["width"]} × {meta["height"]}</b> ({meta["megapixels"]} MP, {meta["size_kb"]} KB)'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-            st.image(active_bytes, caption=uploaded_file.name, use_container_width=True)
+
+    # ── Staged Panels Consolidation ────────────────────────────────────────────
+    active_panels: list[dict] = []
+    if source_mode == "📁 Upload Image File":
+        if uploaded_files:
+            active_panels = [
+                {"bytes": uf.getvalue(), "name": uf.name, "source": f"Uploaded: {uf.name}"}
+                for uf in uploaded_files
+            ]
+            st.markdown(f"**📸 {len(uploaded_files)} Panel Image{'s' if len(uploaded_files) > 1 else ''} Ready for Consolidated Audit:**")
+            cols = st.columns(min(len(uploaded_files), 3))
+            for i, uf in enumerate(uploaded_files):
+                with cols[i % min(len(uploaded_files), 3)]:
+                    meta = get_image_metadata(uf.getvalue())
+                    st.caption(f"**Panel {i+1}**: `{uf.name[:18]}`")
+                    st.image(uf.getvalue(), use_container_width=True)
+                    st.markdown(
+                        f'<div class="resolution-badge" style="background: {meta["quality_color"]}22; color: {meta["quality_color"]}; font-size: 0.73rem; margin: 0 0 0.4rem 0;">'
+                        f'{meta["width"]}×{meta["height"]} ({meta["size_kb"]} KB)'
+                        f'</div>',
+                        unsafe_allow_html=True,
+                    )
+    else:
+        # Camera / Webcam staged panels
+        if st.session_state["staged_panels"]:
+            active_panels = st.session_state["staged_panels"]
+            st.markdown(f"**📸 {len(active_panels)} Staged Panels in Session:**")
+            cols = st.columns(min(len(active_panels), 3))
+            for i, p in enumerate(active_panels):
+                with cols[i % min(len(active_panels), 3)]:
+                    st.caption(f"**Panel {i+1}**")
+                    st.image(p["bytes"], use_container_width=True)
+            if st.button("🗑️ Reset All Staged Panels", use_container_width=True):
+                st.session_state["staged_panels"] = []
+                st.session_state["last_scan_result"] = None
+                st.session_state["last_scan_hash"] = None
+                st.rerun()
+        elif active_bytes:
+            active_panels = [{"bytes": active_bytes, "name": "camera_capture.jpg", "source": active_source}]
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -430,23 +490,23 @@ with col_cam:
 with col_results:
     st.markdown("### 📋 Compliance Audit Report")
 
-    if not active_bytes:
+    if not active_panels:
         st.markdown("""
         <div class="placeholder-card">
-            <h4>No Label Image Captured</h4>
-            <p>Select your camera input on the left to capture or upload a packaged food product label.</p>
+            <h4>No Packaging Images Provided</h4>
+            <p>Select your camera input or file upload on the left to capture or upload packaging panel photos.</p>
             <p style="font-size: 0.85rem; color: #6482a0; margin-top: 1rem;">
-                💡 <b>Tip:</b> Using your phone's <b>WiFi IP Camera</b> provides full sensor resolution (1080p+)
-                which dramatically improves OCR accuracy on fine-print ingredient lists and FSSAI numbers!
+                💡 <b>Multi-Panel Support:</b> You can upload or capture <b>multiple photos</b> (Front PDP, Back Ingredients, Side MRP) to analyze all mandatory statutory declarations across the entire product in one consolidated audit!
             </p>
         </div>
         """, unsafe_allow_html=True)
         st.stop()
 
-    # Compute a cache hash based on image bytes + selected category + options
-    opt_str = f"{category}_{is_curved}_{use_hindi}"
-    img_hash = hashlib.md5(active_bytes + opt_str.encode()).hexdigest()
-    
+    # Compute a cache hash based on all panel bytes + selected category + options
+    combined_bytes = b"".join(p["bytes"] for p in active_panels)
+    opt_str = f"{category}_{is_curved}_{use_hindi}_{len(active_panels)}"
+    img_hash = hashlib.md5(combined_bytes + opt_str.encode()).hexdigest()
+
     # Check if we need to call the backend API
     need_scan = (
         st.session_state["last_scan_result"] is None
@@ -455,24 +515,30 @@ with col_results:
 
     col_hdr, col_rescan = st.columns([2, 1])
     with col_hdr:
-        st.caption(f"Source: **{active_source or 'Image'}**")
+        src_label = f"{len(active_panels)} Panel{'s' if len(active_panels) > 1 else ''} ({active_panels[0]['name']}{f' + {len(active_panels)-1} more' if len(active_panels) > 1 else ''})"
+        st.caption(f"Source: **{src_label}**")
     with col_rescan:
         if st.button("🔄 Re-Analyze", use_container_width=True):
             need_scan = True
 
     if need_scan:
-        with st.spinner("🔍 Running OCR + NER Compliance Pipeline… (analyzing labels, dates, additives)"):
+        panel_label = f"{len(active_panels)} packaging panels" if len(active_panels) > 1 else "packaging label"
+        with st.spinner(f"🔍 Running OCR + NER Compliance Pipeline across {panel_label}…"):
             try:
                 category_clean = category.split(" / ")[0].strip()
+                files_payload = [
+                    ("files", (p["name"], p["bytes"], "image/jpeg"))
+                    for p in active_panels
+                ]
                 response = httpx.post(
                     SCAN_ENDPOINT,
-                    files={"file": ("label.jpg", active_bytes, "image/jpeg")},
+                    files=files_payload,
                     data={
                         "product_category": category_clean,
                         "is_curved": "true" if is_curved else "false",
                         "use_hindi": "true" if use_hindi else "false",
                     },
-                    timeout=120.0,
+                    timeout=180.0,
                 )
                 response.raise_for_status()
                 result = response.json()
@@ -496,73 +562,166 @@ with col_results:
     issues = compliance.get("issues", [])
     extracted = result.get("extracted_data", {})
     missing = result.get("missing_mandatory_fields", [])
+    panels_count = result.get("panels_processed", 1)
+
+    if panels_count > 1:
+        st.markdown(
+            f'<div class="status-pill" style="background: #172a3a; border-color: #274b6b; color: #72b9f3; margin-bottom: 0.8rem;">'
+            f'<span class="dot-online"></span> <b>Multi-Panel Audit Consolidated:</b> {panels_count} packaging panels evaluated together'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
 
     if is_compliant:
-        st.markdown('<div class="badge-pass">✅ &nbsp; COMPLIANT</div>', unsafe_allow_html=True)
+        st.markdown('<div class="badge-pass">✅ &nbsp; STATUTORY DECLARATIONS VERIFIED CLEAR</div>', unsafe_allow_html=True)
     else:
         n = len(issues)
         st.markdown(
-            f'<div class="badge-fail">❌ &nbsp; NON-COMPLIANT &nbsp;·&nbsp; {n} violation{"s" if n != 1 else ""}</div>',
+            f'<div class="badge-fail">🚨 &nbsp; ENFORCEMENT ACTION REQUIRED &nbsp;·&nbsp; {n} NON-COMPLIANCE ITEM{"S" if n != 1 else ""}</div>',
             unsafe_allow_html=True,
         )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Extracted Label Fields ────────────────────────────────────────────────
-    with st.expander("🔍 Extracted Declarations (Legal Metrology & FSSAI)", expanded=True):
+    # ── Officer Executive Briefing ────────────────────────────────────────────
+    st.markdown("### 📋 Official Inspection Briefing")
+    bcol1, bcol2, bcol3, bcol4 = st.columns(4)
+    bcol1.metric("Inspection Status", "PASS" if is_compliant else "ACTION REQUIRED", delta="Clear" if is_compliant else f"{len(issues)} Issues", delta_color="normal" if is_compliant else "inverse")
+    bcol2.metric("Mandatory Fields", f"{10 - len(missing)} / 10", delta=f"-{len(missing)} Missing" if missing else "Complete", delta_color="normal" if not missing else "inverse")
+    
+    font_compliance = extracted.get("font_compliance", {})
+    font_status = font_compliance.get("status", "N/A")
+    bcol3.metric("Rule 9 Font Height", "COMPLIANT" if font_status == "PASS" else ("SUB-STANDARD" if font_status == "FAIL" else "N/A"), delta="OK" if font_status == "PASS" else ("Deficit" if font_status == "FAIL" else None), delta_color="normal" if font_status == "PASS" else "inverse")
+    bcol4.metric("Panels Audited", f"{panels_count} panel{'s' if panels_count != 1 else ''}", delta=f"{len(extracted.get('additives', []))} additives" if extracted.get('additives') else None)
+
+    # ── Officer Action Cards & Violations ──────────────────────────────────────
+    if issues:
+        st.markdown("#### 🚨 Statutory Non-Compliance & Recommended Officer Actions")
+        for i, issue in enumerate(issues, 1):
+            sev = issue.get("severity", "warning")
+            icon = "🔴" if sev == "critical" else "🟡" if sev == "warning" else "🔵"
+            css_class = "issue-card" + (" warning" if sev == "warning" else " info" if sev == "info" else "")
+            
+            title = issue.get("title") or issue.get("detail", f"Statutory Non-Compliance #{i}")
+            detail = issue.get("detail", "")
+            action = issue.get("officer_action") or issue.get("recommendation", "Direct manufacturer to rectify declaration.")
+            regulation = issue.get("regulation_id", "Legal Metrology Act, 2009 / FSSAI Regulations")
+            penalty = issue.get("penalty_provision", "")
+
+            penalty_html = f"""
+            <div style="background: rgba(239, 83, 80, 0.12); border-left: 3px solid #ef5350; padding: 6px 10px; border-radius: 4px; margin-top: 8px;">
+                <span style="color: #ff8a80; font-size: 0.85rem; font-weight: 600;">⚖️ Compoundable Penalty / Legal Provision:</span><br>
+                <span style="color: #ffebee; font-size: 0.82rem;">{penalty}</span>
+            </div>
+            """ if penalty else ""
+
+            st.markdown(
+                f"""
+                <div class="{css_class}" style="margin-bottom: 1rem; padding: 1rem 1.2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                        <span style="font-size: 1.05rem; font-weight: 700; color: #ffffff;">{icon} {title}</span>
+                        <span style="font-size: 0.75rem; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); color: #b0c9e0;">{sev}</span>
+                    </div>
+                    <div style="font-size: 0.92rem; color: #d1e2f2; margin-bottom: 0.5rem; line-height: 1.4;">
+                        <strong>Observation:</strong> {detail}
+                    </div>
+                    <div style="background: rgba(46, 204, 113, 0.12); border-left: 3px solid #2ecc71; padding: 6px 10px; border-radius: 4px; margin-top: 6px;">
+                        <span style="color: #2ecc71; font-size: 0.85rem; font-weight: 600;">👮 Recommended Officer Action:</span><br>
+                        <span style="color: #e8f8f0; font-size: 0.88rem;">{action}</span>
+                    </div>
+                    <div style="margin-top: 8px; font-size: 0.8rem; color: #90caf9;">
+                        📜 <strong>Statutory Authority:</strong> <code>{regulation}</code>
+                    </div>
+                    {penalty_html}
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+    else:
+        st.success("✅ **All statutory declarations are verified and compliant with Legal Metrology (Packaged Commodities) Rules, 2011 and FSSAI Packaging Regulations.**")
+
+    # ── Extracted Label Declarations (Officer Field Checklist) ─────────────────
+    with st.expander("🔍 Verified Label Declarations (Official Field Record)", expanded=False):
         field_map = {
-            "mrp":               ("MRP",               lambda v: f"₹ {v}"),
-            "net_quantity":      ("Net Quantity",      lambda v: v.get("raw", "—") if v else "—"),
-            "mfg_date":          ("Mfg Date",          lambda v: v),
-            "expiry_date":       ("Best Before",       lambda v: v),
-            "fssai_license":     ("FSSAI License",     lambda v: v),
-            "ingredients":       ("Ingredients",       lambda v: f"{len(v)} detected" if isinstance(v, list) and v else ("Detected" if v else "Not detected")),
-            "manufacturer":      ("Manufacturer",      lambda v: v),
-            "country_of_origin": ("Country of Origin", lambda v: v),
-            "consumer_care":     ("Customer Care",     lambda v: v),
-            "allergens":         ("Allergens",         lambda v: ", ".join(v) if isinstance(v, list) else v),
+            "mrp":               ("Maximum Retail Price (MRP)", lambda v: f"₹ {v}"),
+            "net_quantity":      ("Net Quantity",               lambda v: v.get("raw", "—") if v else "—"),
+            "mfg_date":          ("Date of Manufacture",        lambda v: v),
+            "expiry_date":       ("Best Before / Expiry",       lambda v: v),
+            "fssai_license":     ("FSSAI 14-Digit License",     lambda v: v),
+            "ingredients":       ("Ingredients List",           lambda v: f"{len(v)} ingredients identified" if isinstance(v, list) and v else ("Declared" if v else "Missing")),
+            "manufacturer":      ("Manufacturer / Packer",      lambda v: v),
+            "country_of_origin": ("Country of Origin",          lambda v: v),
+            "consumer_care":     ("Consumer Care Helpline",     lambda v: v),
+            "allergens":         ("Allergen Warning",           lambda v: ", ".join(v) if isinstance(v, list) else v),
         }
 
+        meta_fields = extracted.get("_field_metadata", {})
         for key, (label, fmt) in field_map.items():
             val = extracted.get(key)
+            panel_badge = ""
+            if panels_count > 1 and key in meta_fields and meta_fields[key]:
+                pname = meta_fields[key].get("panel_name")
+                if pname:
+                    panel_badge = f' &nbsp;<span style="font-size: 0.72rem; background: #22374e; color: #8ec8f6; padding: 2px 7px; border-radius: 4px; font-weight: 500;">📍 {pname}</span>'
+
             if val:
                 formatted = fmt(val)
                 st.markdown(
                     f'<div class="field-card">'
-                    f'<span class="field-label">{label}</span>'
-                    f'<span class="field-value">{formatted}</span>'
+                    f'<span class="field-label">{label}{panel_badge}</span>'
+                    f'<span class="field-value">✅ &nbsp; {formatted}</span>'
                     f'</div>',
                     unsafe_allow_html=True,
                 )
             else:
-                missing_flag = " ⚠️ MANDATORY" if key in missing else ""
+                missing_flag = " ⚠️ MANDATORY OMISSION" if key in missing else ""
                 st.markdown(
                     f'<div class="field-card">'
                     f'<span class="field-label">{label}</span>'
-                    f'<span class="field-missing">Not detected{missing_flag}</span>'
+                    f'<span class="field-missing">❌ &nbsp; Not Declared on Package{missing_flag}</span>'
                     f'</div>',
                     unsafe_allow_html=True,
                 )
+
+    # ── Rule 9 Font Height Verification ───────────────────────────────────────
+    if font_compliance and font_compliance.get("status") in ("PASS", "FAIL"):
+        is_font_pass = font_compliance.get("is_compliant", True)
+        font_status_badge = "✅ COMPLIANT" if is_font_pass else "❌ SUB-STANDARD (RULE 9 DEFICIT)"
+        est_mm = font_compliance.get("est_height_mm", 0)
+        req_mm = font_compliance.get("required_min_mm", 0)
+        ratio_pct = font_compliance.get("font_ratio_pdp_pct", 0)
+
+        with st.expander(f"📏 Rule 9 Numeral Height Audit — {font_status_badge}", expanded=not is_font_pass):
+            fc1, fc2, fc3 = st.columns(3)
+            fc1.metric("Measured Height (Est.)", f"{est_mm} mm", delta=f"{est_mm - req_mm:+.1f} mm vs statutory min")
+            fc2.metric("Statutory Min (Rule 9 Table 1)", f"{req_mm} mm")
+            fc3.metric("Principal Display Panel Ratio", f"{ratio_pct}%")
+            if not is_font_pass:
+                st.error(
+                    f"⚠️ **Statutory Violation**: Numeral height (~{est_mm} mm) falls below Legal Metrology Rule 9 Table 1 "
+                    f"minimum of {req_mm} mm for net quantity {font_compliance.get('net_quantity_val')} {font_compliance.get('unit')}."
+                )
+            else:
+                st.success(f"Numeral height satisfies Legal Metrology Rule 9(1) Table 1 (Statutory minimum: {req_mm} mm).")
 
     # ── Ingredients & Additives ───────────────────────────────────────────────
     ingredients = extracted.get("ingredients", [])
     additives = extracted.get("additives", [])
     allergens = extracted.get("allergens", [])
 
-    if ingredients:
-        with st.expander(f"🧪 Cleaned Ingredients ({len(ingredients)} detected)", expanded=True):
+    with st.expander(f"🧪 Food Composition & Additives ({len(ingredients)} ingredients, {len(additives)} additives)", expanded=False):
+        if ingredients:
+            st.markdown("##### 🥗 Ingredients Declared:")
             for i, ing in enumerate(ingredients, 1):
                 st.markdown(f"**{i}.** {ing}")
-    else:
-        with st.expander("🧪 Cleaned Ingredients (0 detected)", expanded=False):
+        else:
             st.info("No ingredient list detected on this package.")
 
-    if allergens:
-        with st.expander(f"⚠️ Allergen Declarations ({len(allergens)} items)", expanded=True):
-            st.warning("Allergens detected: " + ", ".join(allergens))
+        if allergens:
+            st.warning("⚠️ **Allergens Declared:** " + ", ".join(allergens))
 
-    if additives:
-        with st.expander(f"⚗️ Additives / INS Codes ({len(additives)} detected)", expanded=True):
+        if additives:
+            st.markdown("##### ⚗️ Additives & INS Numbers:")
             for a in additives:
                 if isinstance(a, dict):
                     code = a.get("code", "INS")
@@ -573,42 +732,147 @@ with col_results:
                         st.markdown(f"- **{code}**")
                 else:
                     st.markdown(f"- **{a}**")
-    else:
-        with st.expander("⚗️ Additives / INS Codes (0 detected)", expanded=False):
-            st.info("No additives or INS codes detected.")
 
-    # ── Violations & Compliance Issues ────────────────────────────────────────
+    # ── Generate Official Field Inspection Report ─────────────────────────────
+    st.markdown("<br>", unsafe_allow_html=True)
+    report_lines = [
+        "=" * 65,
+        "   GOVERNMENT OF INDIA — STATUTORY FIELD INSPECTION REPORT",
+        "     Legal Metrology & Food Safety Compliance Enforcement",
+        "=" * 65,
+        f"Inspection Scan ID : {result.get('scan_id', 'N/A')}",
+        f"Commodity Category : {category}",
+        f"Inspection Verdict : {'PASS (COMPLIANT)' if is_compliant else 'NON-COMPLIANT (ACTION REQUIRED)'}",
+        f"Violations Count   : {len(issues)}",
+        "-" * 65,
+        "1. SUMMARY OF MANDATORY DECLARATIONS:",
+    ]
+    for key, (label, fmt) in field_map.items():
+        v = extracted.get(key)
+        val_str = fmt(v) if v else "NOT DECLARED [VIOLATION]"
+        report_lines.append(f"  - {label:<30}: {val_str}")
+    
+    if font_compliance:
+        report_lines.append("-" * 65)
+        report_lines.append("2. RULE 9 NUMERAL HEIGHT AUDIT:")
+        report_lines.append(f"  - Status                  : {font_compliance.get('status')}")
+        report_lines.append(f"  - Measured Height (Est.)   : {font_compliance.get('est_height_mm')} mm")
+        report_lines.append(f"  - Statutory Requirement   : {font_compliance.get('required_min_mm')} mm")
+
     if issues:
-        st.markdown("#### ⚠️ Compliance Issues & Violations")
-        for issue in issues:
-            sev = issue.get("severity", "warning")
-            icon = SEVERITY_COLOR.get(sev, "🟡")
-            css_class = "issue-card" + (" warning" if sev == "warning" else " info" if sev == "info" else "")
+        report_lines.append("-" * 65)
+        report_lines.append("3. STATUTORY VIOLATIONS & RECOMMENDED OFFICER ACTIONS:")
+        for idx, iss in enumerate(issues, 1):
+            report_lines.append(f"\n[Item {idx}] {iss.get('title', 'Violation')}")
+            report_lines.append(f"  Observation       : {iss.get('detail', '')}")
+            report_lines.append(f"  Officer Action    : {iss.get('officer_action', iss.get('recommendation', ''))}")
+            report_lines.append(f"  Statutory Section : {iss.get('regulation_id', '')}")
+            if iss.get("penalty_provision"):
+                report_lines.append(f"  Penalty Clause    : {iss.get('penalty_provision')}")
+
+    report_lines.extend([
+        "\n" + "=" * 65,
+        "Inspecting Officer Signature: _______________________",
+        "Designation                : Food Safety Officer / Inspector (Legal Metrology)",
+        "=" * 65,
+    ])
+    full_report_text = "\n".join(report_lines)
+
+    # ── Official Report Actions (Direct Browser Download & Inline Preview) ───
+    st.markdown("#### 📄 Official Statutory Field Inspection Report")
+    
+    try:
+        from modules.report_generator import generate_pdf_report
+        pdf_bytes = generate_pdf_report(
+            scan_result=result,
+            product_category=category,
+        )
+        b64_pdf = base64.b64encode(pdf_bytes).decode("utf-8")
+        scan_id_short = result.get("scan_id", "scan")[:8]
+        filename_pdf = f"SurakshaScan_Report_{scan_id_short}.pdf"
+
+        # Direct Browser Download via Data URI (bypasses IDM network hooks)
+        btn_cols = st.columns([1.5, 1.2, 1])
+        with btn_cols[0]:
             st.markdown(
-                f'<div class="{css_class}">'
-                f'<strong>{icon} {issue.get("detail", "")}</strong><br>'
-                f'<em>💡 {issue.get("recommendation", "")}</em>'
-                f'<div class="issue-regulation">📜 {issue.get("regulation_id", "")}</div>'
-                f'</div>',
+                f"""
+                <a href="data:application/pdf;base64,{b64_pdf}" download="{filename_pdf}" style="
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    background: linear-gradient(135deg, #1e88e5, #1565c0);
+                    color: #ffffff !important;
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    padding: 0.6rem 0.8rem;
+                    border-radius: 8px;
+                    text-decoration: none !important;
+                    box-shadow: 0 2px 8px rgba(21,101,192,0.35);
+                    cursor: pointer;
+                ">
+                    📥 Direct Browser Download
+                </a>
+                """,
                 unsafe_allow_html=True,
             )
-    elif not is_compliant:
-        st.info("Mandatory declarations missing.")
-
-    # ── RAG Contract Payload ──────────────────────────────────────────────────
-    rag_payload = result.get("rag_payload")
-    if rag_payload:
-        with st.expander("📦 RAG Contract Payload (Shared JSON Schema)", expanded=False):
-            st.markdown("*Canonical JSON generated for `legal_metrology_rag` & `compliance_engine`:*")
-            st.json(rag_payload)
-            import json as _json
+        with btn_cols[1]:
+            st.markdown(
+                f"""
+                <a href="data:application/pdf;base64,{b64_pdf}" target="_blank" style="
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    background: #22374e;
+                    color: #90caf9 !important;
+                    font-weight: 600;
+                    font-size: 0.88rem;
+                    padding: 0.6rem 0.8rem;
+                    border-radius: 8px;
+                    text-decoration: none !important;
+                    border: 1px solid #355373;
+                    cursor: pointer;
+                ">
+                    🖨️ Open / Print in New Tab
+                </a>
+                """,
+                unsafe_allow_html=True,
+            )
+        with btn_cols[2]:
             st.download_button(
-                label="📥 Download RAG Payload (.json)",
-                data=_json.dumps(rag_payload, indent=2),
-                file_name=f"rag_payload_{result.get('scan_id', 'scan')[:8]}.json",
-                mime="application/json",
+                label="📄 Plain Text (.txt)",
+                data=full_report_text,
+                file_name=f"Inspection_Report_{scan_id_short}.txt",
+                mime="text/plain",
                 use_container_width=True,
             )
+
+        # Embedded Interactive PDF Viewer
+        with st.expander("👁️ Preview Statutory Inspection Report (Interactive In-App Viewer)", expanded=True):
+            st.markdown(
+                f"""
+                <iframe src="data:application/pdf;base64,{b64_pdf}#toolbar=1" width="100%" height="560" type="application/pdf" style="border: 1px solid #2e3d50; border-radius: 8px; background: white;">
+                    <p>Your browser does not support inline PDFs. Use the Direct Browser Download button above.</p>
+                </iframe>
+                """,
+                unsafe_allow_html=True,
+            )
+
+    except Exception as ex:
+        st.warning(f"Could not generate PDF: {ex}")
+        st.download_button(
+            label="📄 Download Text Summary (.txt)",
+            data=full_report_text,
+            file_name=f"Inspection_Report_{result.get('scan_id', 'scan')[:8]}.txt",
+            mime="text/plain",
+            use_container_width=True,
+        )
+
+    # ── Digital Panchnama Archive / RAG Dossier ───────────────────────────────
+    rag_payload = result.get("rag_payload")
+    if rag_payload:
+        with st.expander("📂 Statutory Evidence Dossier (Digital Panchnama Archive)", expanded=False):
+            st.markdown("*Normalized JSON evidence compiled for regulatory enforcement:*")
+            st.json(rag_payload)
 
     # ── Debug / Raw Response ──────────────────────────────────────────────────
     with st.expander("🛠️ Raw Inspection JSON (Officer / Debug View)"):

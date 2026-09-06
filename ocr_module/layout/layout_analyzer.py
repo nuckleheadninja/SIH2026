@@ -105,3 +105,46 @@ class LayoutAnalyzer:
         variance = cv2.Laplacian(gray, cv2.CV_64F).var()
         score = min(1.0, max(0.05, variance / 500.0))
         return round(score, 3)
+
+    @staticmethod
+    def check_rule9_font_compliance(
+        net_quantity_val: float,
+        unit: str,
+        numeral_height_px: int,
+        pdp_height_px: int
+    ) -> Dict[str, Any]:
+        """
+        Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 9(1) Table 1 verification.
+        Computes statutory minimum numeral height and compliance verdict.
+        """
+        unit_clean = unit.lower().strip()
+        mult = 1000.0 if unit_clean in ("kg", "l", "ltr", "litre", "litres") else 1.0
+        base_qty = net_quantity_val * mult
+
+        if base_qty <= 50.0:
+            req_min_mm = 1.0
+        elif base_qty <= 200.0:
+            req_min_mm = 2.0
+        elif base_qty <= 1000.0:
+            req_min_mm = 4.0
+        else:
+            req_min_mm = 6.0
+
+        pdp_h = max(1, pdp_height_px)
+        ratio = numeral_height_px / float(pdp_h)
+        est_height_mm = ratio * 150.0  # Approx 150mm PDP height reference
+        is_compliant = est_height_mm >= (req_min_mm * 0.80)
+
+        return {
+            "is_compliant": bool(is_compliant),
+            "status": "PASS" if is_compliant else "FAIL",
+            "net_quantity_val": net_quantity_val,
+            "unit": unit_clean,
+            "numeral_height_px": int(numeral_height_px),
+            "font_ratio_pdp_pct": round(ratio * 100, 2),
+            "est_height_mm": round(est_height_mm, 1),
+            "required_min_mm": req_min_mm,
+            "regulation_id": "Legal Metrology (Packaged Commodities) Rules, 2011 — Rule 9(1) Table 1",
+            "penalty_provision": "Section 36(1) of Legal Metrology Act, 2009 (Fine up to ₹25,000 for first offence, ₹50,000 for subsequent offence)",
+            "recommendation": f"Ensure net quantity numerals are printed with minimum height of {req_min_mm} mm.",
+        }
