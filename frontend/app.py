@@ -516,6 +516,7 @@ with col_results:
             "mfg_date":          ("Mfg Date",          lambda v: v),
             "expiry_date":       ("Best Before",       lambda v: v),
             "fssai_license":     ("FSSAI License",     lambda v: v),
+            "ingredients":       ("Ingredients",       lambda v: f"{len(v)} detected" if isinstance(v, list) and v else ("Detected" if v else "Not detected")),
             "manufacturer":      ("Manufacturer",      lambda v: v),
             "country_of_origin": ("Country of Origin", lambda v: v),
             "consumer_care":     ("Customer Care",     lambda v: v),
@@ -552,15 +553,29 @@ with col_results:
         with st.expander(f"🧪 Cleaned Ingredients ({len(ingredients)} detected)", expanded=True):
             for i, ing in enumerate(ingredients, 1):
                 st.markdown(f"**{i}.** {ing}")
+    else:
+        with st.expander("🧪 Cleaned Ingredients (0 detected)", expanded=False):
+            st.info("No ingredient list detected on this package.")
 
     if allergens:
-        with st.expander(f"⚠️ Allergen Declarations ({len(allergens)} items)"):
+        with st.expander(f"⚠️ Allergen Declarations ({len(allergens)} items)", expanded=True):
             st.warning("Allergens detected: " + ", ".join(allergens))
 
     if additives:
-        with st.expander(f"⚗️ Additives / INS Codes ({len(additives)} detected)"):
+        with st.expander(f"⚗️ Additives / INS Codes ({len(additives)} detected)", expanded=True):
             for a in additives:
-                st.markdown(f"- **{a['code']}** — {a['name']}")
+                if isinstance(a, dict):
+                    code = a.get("code", "INS")
+                    name = a.get("name", "")
+                    if name:
+                        st.markdown(f"- **{code}** — {name}")
+                    else:
+                        st.markdown(f"- **{code}**")
+                else:
+                    st.markdown(f"- **{a}**")
+    else:
+        with st.expander("⚗️ Additives / INS Codes (0 detected)", expanded=False):
+            st.info("No additives or INS codes detected.")
 
     # ── Violations & Compliance Issues ────────────────────────────────────────
     if issues:
