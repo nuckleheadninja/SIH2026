@@ -18,7 +18,8 @@ class HybridRetriever:
     def __init__(self, vector_store=None, rrf_k: int = 60, alpha: float = 0.5):
         if vector_store is None:
             self.vector_store = VectorStore(collection_name="legal_metrology")
-            chunks_path = r"d:\SIH2026\legal_metrology_rag\outputs\validated_legal_chunks.json"
+            from pathlib import Path
+            chunks_path = Path(__file__).resolve().parent.parent.parent / "outputs" / "validated_legal_chunks.json"
             if os.path.exists(chunks_path):
                 with open(chunks_path, "r", encoding="utf-8") as f:
                     chunks = json.load(f)
