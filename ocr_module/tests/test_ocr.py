@@ -107,6 +107,42 @@ def test_preprocessor_synthetic_image():
     """Verifies preprocessor functions on synthetic image array without error."""
     import numpy as np
     img = np.full((100, 100, 3), 200, dtype=np.uint8)
-    processed = PackagingPreprocessor.preprocess_image(img, apply_anti_glare=True, apply_dewrinkle=True)
+    processed = PackagingPreprocessor.preprocess_image(img, apply_anti_glare=True, apply_dewrinkle=True, apply_dot_matrix_enhancement=True)
     assert processed is not None
     assert processed.shape == (100, 100, 3)
+
+
+def test_rule9_font_compliance_check():
+    """Verifies Rule 9(1) Table 1 statutory minimum numeral height evaluation."""
+    # Compliant 150ml container (min req 2.0mm, est 5.25mm)
+    res_pass = LayoutAnalyzer.check_rule9_font_compliance(
+        net_quantity_val=150.0,
+        unit="ml",
+        numeral_height_px=35,
+        pdp_height_px=1000
+    )
+    assert res_pass["is_compliant"] is True
+    assert res_pass["status"] == "PASS"
+    assert res_pass["required_min_mm"] == 2.0
+    assert "Rule 9(1)" in res_pass["regulation_id"]
+
+    # Non-compliant 500g package with tiny numeral (min req 4.0mm, est 1.5mm)
+    res_fail = LayoutAnalyzer.check_rule9_font_compliance(
+        net_quantity_val=500.0,
+        unit="g",
+        numeral_height_px=10,
+        pdp_height_px=1000
+    )
+    assert res_fail["is_compliant"] is False
+    assert res_fail["status"] == "FAIL"
+    assert res_fail["required_min_mm"] == 4.0
+
+
+def test_dot_matrix_enhancement():
+    """Verifies continuous horizontal dilation bridges disjoint ink dots."""
+    import numpy as np
+    img = np.zeros((30, 30, 3), dtype=np.uint8)
+    img[10, 10] = 255
+    img[10, 12] = 255
+    enhanced = PackagingPreprocessor.enhance_dot_matrix(img)
+    assert enhanced[10, 11, 0] > 0

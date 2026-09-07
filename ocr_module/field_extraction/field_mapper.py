@@ -179,7 +179,7 @@ class FieldMapper:
 
         # Terminate when nutrition table, instructions, or storage conditions begin
         stop_pattern = re.compile(
-            r"(?:nutritio|good\s*to\s*know|how\s*to\s*prepare|cook\s*any\s*dish|mfg|mrp|packed\s*by|marketed\s*by|storage|keep\s*in\s*a\s*cool)",
+            r"(?:nutritio\w*|typical\s*values|serving\s*size|good\s*to\s*know|how\s*to\s*prepare|cook\s*any\s*dish|mfg|mrp|packed\s*by|marketed\s*by|storage|keep\s*in\s*a\s*cool|tastes\s*best)",
             re.IGNORECASE
         )
         stop_match = stop_pattern.search(candidate)
@@ -210,12 +210,43 @@ class FieldMapper:
 
         # Clean individual ingredient items
         clean_text = re.sub(r"^[^\w]+", "", raw_ing_text)
-        raw_items = re.split(r"[,;•\n]+", clean_text)
+        
+        # Protect punctuation inside parentheses
+        def _protect_parens(text: str) -> str:
+            depth = 0
+            chars = []
+            for ch in text:
+                if ch == "(":
+                    depth += 1
+                elif ch == ")":
+                    depth = max(0, depth - 1)
+                if depth > 0:
+                    if ch == ",":
+                        chars.append("§COMMA§")
+                    elif ch == ";":
+                        chars.append("§SEMI§")
+                    elif ch == ".":
+                        chars.append("§DOT§")
+                    else:
+                        chars.append(ch)
+                else:
+                    chars.append(ch)
+            return "".join(chars)
+
+        protected = _protect_parens(clean_text)
+        raw_items = re.split(r"[,;•\n\r]+|\.(?=\s*[A-Z])|\s{2,}", protected)
         cleaned_items = []
         for item in raw_items:
+            item_clean = (
+                item.replace("§COMMA§", ",")
+                .replace("§SEMI§", ";")
+                .replace("§DOT§", ".")
+                .strip(" .;:\"'-_")
+            )
+            if item_clean.startswith("(") and item_clean.endswith(")"):
+                item_clean = item_clean[1:-1].strip()
             # Strip noise words like "Allergen Note:", numbers, etc.
-            item_clean = re.sub(r"^(?:allergen\s*note:?|may\s*contain|contains:?)\s*", "", item, flags=re.IGNORECASE).strip()
-            item_clean = re.sub(r"^[^\w]+|[^\w\)]+$", "", item_clean).strip()
+            item_clean = re.sub(r"^(?:allergen\s*note:?|may\s*contain|contains:?)\s*", "", item_clean, flags=re.IGNORECASE).strip()
             if len(item_clean) >= 3 and not re.match(r"^\d+$", item_clean):
                 cleaned_items.append(item_clean)
 
